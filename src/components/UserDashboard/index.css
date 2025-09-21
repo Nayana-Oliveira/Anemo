@@ -1,0 +1,135 @@
+.dashboard-page {
+  background: linear-gradient(135deg, var(--primary) 0%, var(--sidebar-primary) 100%);
+  min-height: 100vh;
+  padding: 40px 0;
+}
+
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: 350px 1fr;
+  gap: 40px;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.sidebar-menu {
+  background: var(--sidebar);
+  border-radius: 20px;
+  padding: 0;
+  height: fit-content;
+}
+
+.menu-item {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  padding: 20px 25px;
+  border-bottom: 1px solid var(--border);
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  text-decoration: none;
+  color: var(--sidebar-foreground);
+}
+
+.menu-item:first-child {
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
+}
+
+.menu-item:last-child {
+  border-bottom: none;
+  border-bottom-left-radius: 20px;
+  border-bottom-right-radius: 20px;
+}
+
+.menu-item:hover,
+.menu-item.active {
+  background-color: var(--sidebar-accent);
+}
+
+.menu-icon {
+  font-size: 20px;
+  color: var(--primary);
+}
+
+.main-content {
+  background: var(--card);
+  border-radius: 20px;
+  padding: 40px;
+}
+
+.content-section {
+  margin-bottom: 40px;
+}
+
+.content-section h2 {
+  font-size: 24px;
+  margin-bottom: 20px;
+  color: var(--foreground);
+}
+
+.empty-state {
+  text-align: center;
+  padding: 60px 20px;
+  color: var(--muted-foreground);
+  font-size: 18px;
+}
+
+.user-info-grid {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 40px;
+  align-items: start;
+}
+
+.progress-circle {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  background: conic-gradient(var(--primary) 0deg 324deg, var(--sidebar) 324deg 360deg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.progress-inner {
+  width: 80px;
+  height: 80px;
+  background: var(--card);
+  border-radius: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.progress-percentage {
+  font-size: 18px;
+  font-weight: bold;
+  color: var(--primary);
+}
+
+.progress-label {
+  font-size: 12px;
+  color: var(--muted-foreground);
+  text-align: center;
+  margin-top: 10px;
+}
+
+.edit-btn {
+  background-color: var(--primary);
+  color: var(--primary-foreground);
+  padding: 10px 20px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  margin-top: 20px;
+}
+
+.form-grid-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}

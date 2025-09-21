@@ -17,7 +17,6 @@ export default function RegisterAdmin({ onNavigate }) {
 
   const handleSubmit = (e) => {
     e.preventDefault()
-    // Simulate admin registration
     alert("Cadastro de administrador realizado com sucesso!")
     onNavigate("login-admin")
   }

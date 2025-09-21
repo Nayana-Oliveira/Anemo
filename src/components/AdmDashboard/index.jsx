@@ -3,16 +3,16 @@
 import { useState } from "react";
 import "./index.css";
 
-export default function AdminDashboard({ user, onNavigate, onLogout }) {
+export default function AdminDashboard({ user, onNavigate }) {
   const [activeSection, setActiveSection] = useState("account");
 
   const menuItems = [
-    { id: "account", label: "Minha conta", icon: "/assets/user.svg" },
-    { id: "products", label: "Meus produtos", icon: "/assets/order.svg" },
-    { id: "addresses", label: "Meus endereços", icon: "/assets/mapa.svg" },
-    { id: "register-product", label: "Cadastrar produtos", icon: "/assets/add.svg" },
-    { id: "exchanges", label: "Trocas e devoluções", icon: "/assets/troca.svg" },
-    { id: "logout", label: "Sair", icon: "/assets/sair.svg" },
+    { id: "account", label: "Minha conta", icon: "/assets/do-utilizador.png" },
+    { id: "products", label: "Meus produtos", icon: "/assets/editar.png" },
+    { id: "addresses", label: "Meus endereços", icon: "/assets/mapa.png" },
+    { id: "register-product", label: "Cadastrar produtos", icon: "/assets/mais.png" },
+    { id: "exchanges", label: "Trocas e devoluções", icon: "/assets/exchange-alt.png" },
+    { id: "logout", label: "Sair", icon: "/assets/saida.png" },
   ];
 
   const handleMenuClick = (itemId) => {
@@ -90,22 +90,9 @@ export default function AdminDashboard({ user, onNavigate, onLogout }) {
         return (
           <div>
             <h2 style={{ fontSize: "24px", fontWeight: "bold", marginBottom: "30px", color: "#333" }}>Meus Produtos</h2>
-            <div
-              style={{
-                backgroundColor: "white",
-                borderRadius: "15px",
-                padding: "40px",
-                textAlign: "center",
-                color: "#666",
-                fontSize: "18px",
-              }}
-            >
+            <div style={{ backgroundColor: "white", borderRadius: "15px", padding: "40px", textAlign: "center", color: "#666", fontSize: "18px" }}>
               <p>Nenhum produto cadastrado ainda.</p>
-              <button
-                className="btn btn-primary"
-                style={{ marginTop: "20px" }}
-                onClick={() => onNavigate("product-registration")}
-              >
+              <button className="btn btn-primary" style={{ marginTop: "20px" }} onClick={() => onNavigate("product-registration")}>
                 Cadastrar Primeiro Produto
               </button>
             </div>
@@ -118,16 +105,7 @@ export default function AdminDashboard({ user, onNavigate, onLogout }) {
             <h2 style={{ fontSize: "24px", fontWeight: "bold", marginBottom: "30px", color: "#333" }}>
               Meus Endereços
             </h2>
-            <div
-              style={{
-                backgroundColor: "white",
-                borderRadius: "15px",
-                padding: "40px",
-                textAlign: "center",
-                color: "#666",
-                fontSize: "18px",
-              }}
-            >
+            <div style={{ backgroundColor: "white", borderRadius: "15px", padding: "40px", textAlign: "center", color: "#666", fontSize: "18px" }}>
               <p>Nenhum endereço cadastrado.</p>
               <button className="btn btn-primary" style={{ marginTop: "20px" }}>
                 Adicionar Endereço
@@ -142,16 +120,7 @@ export default function AdminDashboard({ user, onNavigate, onLogout }) {
             <h2 style={{ fontSize: "24px", fontWeight: "bold", marginBottom: "30px", color: "#333" }}>
               Trocas e Devoluções
             </h2>
-            <div
-              style={{
-                backgroundColor: "white",
-                borderRadius: "15px",
-                padding: "40px",
-                textAlign: "center",
-                color: "#666",
-                fontSize: "18px",
-              }}
-            >
+            <div style={{ backgroundColor: "white", borderRadius: "15px", padding: "40px", textAlign: "center", color: "#666", fontSize: "18px" }}>
               <p>Nenhuma solicitação de troca ou devolução.</p>
               <button className="btn btn-secondary" style={{ marginTop: "20px" }}>
                 Gerenciar Solicitações
@@ -212,7 +181,9 @@ export default function AdminDashboard({ user, onNavigate, onLogout }) {
                   }
                 }}
               >
-                <span style={{ fontSize: "20px" }}>{item.icon}</span>
+
+                <img src={item.icon} alt="" style={{ width: '20px', height: '20px' }} />
+                
                 <span style={{ fontSize: "16px", fontWeight: "500", color: "#333" }}>{item.label}</span>
               </div>
             ))}

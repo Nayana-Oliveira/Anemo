@@ -12,6 +12,7 @@ import ProductDetail from "./components/ProductDetail"
 import UserDashboard from "./components/UserDashboard"
 import AdminDashboard from "./components/AdmDashboard"
 import ProductRegistration from "./components/ProductRegistration"
+import CartPage from "./components/CartPage"
 
 export default function App() {
 const [currentPage, setCurrentPage] = useState("login-user")
@@ -37,6 +38,8 @@ const [user, setUser] = useState(null)
         return <AdminDashboard onNavigate={setCurrentPage} user={user} />
       case "product-registration":
         return <ProductRegistration onNavigate={setCurrentPage} />
+      case "cart":
+        return <CartPage onNavigate={setCurrentPage} />
       default:
         return <HomePage onNavigate={setCurrentPage} />
     }

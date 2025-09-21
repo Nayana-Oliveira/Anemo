@@ -7,12 +7,12 @@ export default function UserDashboard({ user, onNavigate, onLogout }) {
   const [activeSection, setActiveSection] = useState("account")
 
   const menuItems = [
-    { id: "account", label: "Minha conta", icon: "👤" },
-    { id: "data", label: "Meus dados", icon: "📄" },
-    { id: "addresses", label: "Meus endereços", icon: "🗺️" },
-    { id: "orders", label: "Pedidos", icon: "📦" },
-    { id: "exchanges", label: "Trocas e devoluções", icon: "↔️" },
-    { id: "logout", label: "Sair", icon: "↗️" },
+    { id: "account", label: "Minha conta", icon: "/assets/do-utilizador.png" },
+    { id: "data", label: "Meus dados", icon: "/assets/documento.png" },
+    { id: "addresses", label: "Meus endereços", icon: "/assets/mapa.png" },
+    { id: "orders", label: "Pedidos", icon: "/assets/editar.png" }, 
+    { id: "exchanges", label: "Trocas e devoluções", icon: "/assets/exchange-alt.png" },
+    { id: "logout", label: "Sair", icon: "/assets/saida.png" },
   ]
 
   const handleMenuClick = (itemId) => {
@@ -272,7 +272,7 @@ export default function UserDashboard({ user, onNavigate, onLogout }) {
                   }
                 }}
               >
-                <span style={{ fontSize: "20px" }}>{item.icon}</span>
+                <img src={item.icon} alt="" style={{ width: '20px', height: '20px' }} />
                 <span style={{ fontSize: "16px", fontWeight: "500", color: "#333" }}>{item.label}</span>
               </div>
             ))}

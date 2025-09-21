@@ -27,7 +27,7 @@ export default function Header({ onNavigate, user }) {
                 <img src="/assets/placeholder-user.jpg" alt="User Icon" className="user-icon-img" />
               </div>
             </div>
-            <div className="cart-icon">
+            <div className="cart-icon" onClick={() => onNavigate("cart")}>
               <img src="/assets/carrinho.svg" alt="Carrinho de compras" />
             </div>
           </div>

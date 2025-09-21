@@ -43,6 +43,7 @@ export default function ProductDetail({ onNavigate }) {
 
   const handleAddToCart = () => {
     alert("Produto adicionado ao carrinho!")
+    onNavigate("cart")
   }
 
   const handleCalculateShipping = () => {
@@ -53,7 +54,6 @@ export default function ProductDetail({ onNavigate }) {
 
   return (
     <div style={{ backgroundColor: "white", minHeight: "100vh" }}>
-      {/* Navigation Bar */}
       <nav
         style={{
           backgroundColor: "white",
@@ -92,7 +92,6 @@ export default function ProductDetail({ onNavigate }) {
         </div>
       </nav>
 
-      {/* Breadcrumb */}
       <div className="container" style={{ padding: "20px 0" }}>
         <div style={{ fontSize: "14px", color: "#666" }}>
           <button
@@ -112,7 +111,6 @@ export default function ProductDetail({ onNavigate }) {
         </div>
       </div>
 
-      {/* Product Detail */}
       <div className="container" style={{ paddingBottom: "60px" }}>
         <div
           className="product-detail-grid"
@@ -123,7 +121,6 @@ export default function ProductDetail({ onNavigate }) {
             alignItems: "start",
           }}
         >
-          {/* Product Images */}
           <div>
             <div
               className="product-images-grid"
@@ -133,7 +130,6 @@ export default function ProductDetail({ onNavigate }) {
                 gap: "20px",
               }}
             >
-              {/* Thumbnail Images */}
               <div className="product-thumbnails" style={{ display: "flex", flexDirection: "column", gap: "15px" }}>
                 {productImages.map((image, index) => (
                   <div
@@ -156,7 +152,6 @@ export default function ProductDetail({ onNavigate }) {
                 ))}
               </div>
 
-              {/* Main Image */}
               <div
                 style={{
                   width: "100%",
@@ -171,7 +166,6 @@ export default function ProductDetail({ onNavigate }) {
             </div>
           </div>
 
-          {/* Product Info */}
           <div>
             <h1 style={{ fontSize: "36px", fontWeight: "bold", marginBottom: "20px", color: "#333" }}>Jiboia Verde</h1>
 
@@ -180,7 +174,6 @@ export default function ProductDetail({ onNavigate }) {
               <p style={{ fontSize: "16px", color: "#666" }}>ou em até 4x R$ 45,72</p>
             </div>
 
-            {/* Vase Selection */}
             <div style={{ marginBottom: "30px" }}>
               <h3 style={{ fontSize: "18px", fontWeight: "600", marginBottom: "15px", color: "#333" }}>Vaso:</h3>
               <div className="variant-buttons" style={{ display: "flex", gap: "15px" }}>
@@ -204,7 +197,6 @@ export default function ProductDetail({ onNavigate }) {
               </div>
             </div>
 
-            {/* Size Selection */}
             <div style={{ marginBottom: "30px" }}>
               <h3 style={{ fontSize: "18px", fontWeight: "600", marginBottom: "15px", color: "#333" }}>Tamanho:</h3>
               <div className="variant-buttons" style={{ display: "flex", gap: "15px" }}>
@@ -228,7 +220,6 @@ export default function ProductDetail({ onNavigate }) {
               </div>
             </div>
 
-            {/* Color Selection */}
             <div style={{ marginBottom: "30px" }}>
               <h3 style={{ fontSize: "18px", fontWeight: "600", marginBottom: "15px", color: "#333" }}>Cor:</h3>
               <div style={{ display: "flex", gap: "15px" }}>
@@ -250,7 +241,6 @@ export default function ProductDetail({ onNavigate }) {
               </div>
             </div>
 
-            {/* Quantity and Add to Cart */}
             <div style={{ marginBottom: "30px" }}>
               <div
                 className="quantity-controls"
@@ -321,7 +311,6 @@ export default function ProductDetail({ onNavigate }) {
               </div>
             </div>
 
-            {/* Shipping Calculator */}
             <div style={{ marginBottom: "30px" }}>
               <h3 style={{ fontSize: "16px", fontWeight: "600", marginBottom: "15px", color: "#333" }}>
                 Simule seu frete
@@ -346,7 +335,6 @@ export default function ProductDetail({ onNavigate }) {
               </div>
             </div>
 
-            {/* Product Description */}
             <div>
               <h3 style={{ fontSize: "18px", fontWeight: "600", marginBottom: "15px", color: "#333" }}>
                 Sobre a Jiboia Verde

@@ -36,13 +36,10 @@ export default function ProductRegistration({ onNavigate }) {
 
   return (
     <div style={{ backgroundColor: "#6b9b76", minHeight: "100vh" }}>
-      {/* Header */}
       <header style={{ backgroundColor: "#6b9b76", padding: "20px 0" }}>
         <div className="container">
           <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
             <div className="logo" onClick={() => onNavigate("home")} style={{ cursor: "pointer" }}>
-              <div className="logo-icon">🌿</div>
-              <span>Anêmo</span>
             </div>
             <div style={{ color: "white", display: "flex", alignItems: "center", gap: "10px" }}>
               <div
@@ -64,7 +61,6 @@ export default function ProductRegistration({ onNavigate }) {
         </div>
       </header>
 
-      {/* Product Registration Form */}
       <div className="container" style={{ padding: "40px 0" }}>
         <div
           style={{
@@ -206,7 +202,10 @@ export default function ProductRegistration({ onNavigate }) {
                   onMouseLeave={(e) => (e.currentTarget.style.borderColor = "#ddd")}
                   onClick={() => document.getElementById("photos").click()}
                 >
-                  <div style={{ fontSize: "48px", marginBottom: "15px" }}>📷</div>
+                  <div style={{ marginBottom: "15px" }}>
+                    <img src="/assets/visor-da-camera.png" alt="Camera" style={{ width: '48px', height: '48px' }} />
+                  </div>
+
                   <p style={{ color: "#666", fontSize: "16px", fontWeight: "500" }}>Adicionar fotos</p>
                   <input
                     type="file"

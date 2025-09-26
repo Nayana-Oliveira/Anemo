@@ -2,17 +2,6 @@
 
 Bem-vindo ao repositório do Anêmo, um e-commerce completo focado na venda de plantas, sementes e acessórios de jardinagem. Este projeto foi desenvolvido como parte do Projeto Integrador II, utilizando tecnologias modernas de front-end para criar uma experiência de usuário fluida e responsiva.
 
-## Índice
-
-  - [Sobre o Projeto](#-sobre-o-projeto)
-  - [Funcionalidades](#-funcionalidades)
-  - [Tecnologias Utilizadas](#-tecnologias-utilizadas)
-  - [Como Executar o Projeto](#-como-executar-o-projeto)
-  - [Estrutura de Estilo](#-estrutura-de-estilo)
-  - [Estrutura de Pastas](#-estrutura-de-pastas)
-  - [Desenvolvedoras](#-desenvolvedores)
-
-
 -----
 
 ### Sobre o Projeto

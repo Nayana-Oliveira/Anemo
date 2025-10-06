@@ -6,14 +6,25 @@ import "./index.css"
 
 export default function LoginAdmin({ onLogin, onNavigate }) {
   const [formData, setFormData] = useState({
-    loginId: "",
+    email: "",
     password: "",
   })
 
-  const handleSubmit = (e) => {
-    e.preventDefault()
-    onLogin({ name: "Administrador", email: formData.loginId }, "admin")
-    onNavigate("admin-dashboard")
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await fetch(`http://localhost:5010/admins?email=${formData.email}&password=${formData.password}`);
+      const admins = await response.json();
+      if (admins.length > 0) {
+        onLogin({ name: admins[0].fullName, email: admins[0].email, ...admins[0] }, "admin");
+        onNavigate("admin-dashboard");
+      } else {
+        alert("E-mail ou senha de administrador inválidos!");
+      }
+    } catch (error) {
+      console.error('Erro ao fazer login de administrador:', error);
+      alert("Erro ao fazer login. Tente novamente.");
+    }
   }
 
   const handleChange = (e) => {
@@ -34,8 +45,8 @@ export default function LoginAdmin({ onLogin, onNavigate }) {
 
         <form onSubmit={handleSubmit}>
           <div className="form-group">
-            <label htmlFor="loginId">ID de Login:</label>
-            <input type="text" id="loginId" name="loginId" value={formData.loginId} onChange={handleChange} required />
+            <label htmlFor="email">E-mail:</label>
+            <input type="email" id="email" name="email" value={formData.email} onChange={handleChange} required />
           </div>
 
           <div className="form-group">

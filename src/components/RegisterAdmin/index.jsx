@@ -15,10 +15,29 @@ export default function RegisterAdmin({ onNavigate }) {
     confirmPassword: "",
   })
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
-    alert("Cadastro de administrador realizado com sucesso!")
-    onNavigate("login-admin")
+    if (formData.password !== formData.confirmPassword) {
+      alert("As senhas não correspondem!");
+      return;
+    }
+
+    const { confirmPassword, ...adminData } = formData;
+
+    try {
+      await fetch('http://localhost:5010/admins', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(adminData),
+      });
+      alert("Cadastro de administrador realizado com sucesso!")
+      onNavigate("login-admin")
+    } catch (error) {
+      console.error('Erro ao cadastrar administrador:', error);
+      alert("Erro ao cadastrar administrador. Tente novamente.");
+    }
   }
 
   const handleChange = (e) => {
@@ -31,7 +50,9 @@ export default function RegisterAdmin({ onNavigate }) {
   return (
     <div className="auth-page">
       <div className="auth-card" style={{ maxWidth: "800px" }}>
-        <div className="auth-logo">🌿</div>
+        <div className="auth-logo">
+          <img src="/assets/anemo_logo.png" alt="Anêmo logo"/>
+        </div>
 
         <h1 style={{ fontSize: "32px", marginBottom: "20px", color: "#333" }}>Cadastro de Administrador</h1>
         <h2 style={{ fontSize: "20px", marginBottom: "30px", color: "#666" }}>Dados Pessoais</h2>

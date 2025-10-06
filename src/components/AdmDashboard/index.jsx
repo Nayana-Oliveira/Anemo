@@ -1,10 +1,26 @@
 "use client"
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import "./index.css";
 
 export default function AdminDashboard({ user, onNavigate }) {
   const [activeSection, setActiveSection] = useState("account");
+  const [products, setProducts] = useState([]);
+
+  useEffect(() => {
+    if (activeSection === "products") {
+      const fetchProducts = async () => {
+        try {
+          const response = await fetch('http://localhost:5010/products');
+          const data = await response.json();
+          setProducts(data);
+        } catch (error) {
+          console.error('Erro ao buscar produtos:', error);
+        }
+      };
+      fetchProducts();
+    }
+  }, [activeSection]);
 
   const menuItems = [
     { id: "account", label: "Minha conta", icon: "/assets/do-utilizador.png" },
@@ -31,57 +47,23 @@ export default function AdminDashboard({ user, onNavigate }) {
         return (
           <div>
             <h2 style={{ fontSize: "24px", fontWeight: "bold", marginBottom: "30px", color: "#333" }}>
-              Dados do último pedido:
-            </h2>
-            <div
-              style={{
-                backgroundColor: "white",
-                borderRadius: "15px",
-                padding: "40px",
-                textAlign: "center",
-                color: "#666",
-                fontSize: "18px",
-                marginBottom: "40px",
-              }}
-            >
-              Sem pedidos anteriores. :(
-            </div>
-
-            <h2 style={{ fontSize: "24px", fontWeight: "bold", marginBottom: "30px", color: "#333" }}>
-              Dados pessoais do cliente:
+              Dados do Administrador:
             </h2>
             <div style={{ backgroundColor: "white", borderRadius: "15px", padding: "40px" }}>
-              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "40px", alignItems: "start" }}>
                 <div>
                   <div style={{ marginBottom: "20px" }}>
                     <strong style={{ color: "#333" }}>Nome completo</strong>
-                    <p style={{ color: "#666", margin: "5px 0" }}>Nome fictício</p>
+                    <p style={{ color: "#666", margin: "5px 0" }}>{user?.fullName || 'Nome não encontrado'}</p>
                   </div>
                   <div style={{ marginBottom: "20px" }}>
                     <strong style={{ color: "#333" }}>E-mail:</strong>
-                    <p style={{ color: "#666", margin: "5px 0" }}>email fictício</p>
+                    <p style={{ color: "#666", margin: "5px 0" }}>{user?.email || 'E-mail não encontrado'}</p>
                   </div>
                   <div style={{ marginBottom: "20px" }}>
-                    <strong style={{ color: "#333" }}>CPF:</strong>
-                    <p style={{ color: "#666", margin: "5px 0" }}>111.111.111-11</p>
+                    <strong style={{ color: "#333" }}>CNPJ:</strong>
+                    <p style={{ color: "#666", margin: "5px 0" }}>{user?.cnpj || 'CNPJ não encontrado'}</p>
                   </div>
                 </div>
-                <div>
-                  <div style={{ marginBottom: "20px" }}>
-                    <strong style={{ color: "#333" }}>Data de nascimento:</strong>
-                    <p style={{ color: "#666", margin: "5px 0" }}>01/01/0001</p>
-                  </div>
-                  <div style={{ marginBottom: "20px" }}>
-                    <strong style={{ color: "#333" }}>Telefone:</strong>
-                    <p style={{ color: "#666", margin: "5px 0" }}>11-99999999</p>
-                  </div>
-                  <div style={{ textAlign: "center" }}>
-                    <button className="btn btn-primary" style={{ minWidth: "150px" }}>
-                      Emite NF-E
-                    </button>
-                  </div>
-                </div>
-              </div>
             </div>
           </div>
         );
@@ -90,10 +72,18 @@ export default function AdminDashboard({ user, onNavigate }) {
         return (
           <div>
             <h2 style={{ fontSize: "24px", fontWeight: "bold", marginBottom: "30px", color: "#333" }}>Meus Produtos</h2>
-            <div style={{ backgroundColor: "white", borderRadius: "15px", padding: "40px", textAlign: "center", color: "#666", fontSize: "18px" }}>
-              <p>Nenhum produto cadastrado ainda.</p>
+            <div style={{ backgroundColor: "white", borderRadius: "15px", padding: "40px", color: "#666", fontSize: "18px" }}>
+              {products.length > 0 ? (
+                <ul>
+                  {products.map(product => (
+                    <li key={product.id}>{product.productName} - R$ {product.price}</li>
+                  ))}
+                </ul>
+              ) : (
+                <p>Nenhum produto cadastrado ainda.</p>
+              )}
               <button className="btn btn-primary" style={{ marginTop: "20px" }} onClick={() => onNavigate("product-registration")}>
-                Cadastrar Primeiro Produto
+                Cadastrar Novo Produto
               </button>
             </div>
           </div>
@@ -183,7 +173,7 @@ export default function AdminDashboard({ user, onNavigate }) {
               >
 
                 <img src={item.icon} alt="" style={{ width: '20px', height: '20px' }} />
-                
+
                 <span style={{ fontSize: "16px", fontWeight: "500", color: "#333" }}>{item.label}</span>
               </div>
             ))}

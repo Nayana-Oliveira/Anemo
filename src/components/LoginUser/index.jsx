@@ -5,14 +5,25 @@ import "./index.css"
 
 export default function LoginUser({ onLogin, onNavigate }) {
   const [formData, setFormData] = useState({
-    username: "",
+    email: "",
     password: "",
   })
 
-  const handleSubmit = (e) => {
-    e.preventDefault()
-    onLogin({ name: formData.username, email: formData.username }, "user")
-    onNavigate("user-dashboard")
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await fetch(`http://localhost:5010/users?email=${formData.email}&password=${formData.password}`);
+      const users = await response.json();
+      if (users.length > 0) {
+        onLogin({ name: users[0].fullName, email: users[0].email }, "user");
+        onNavigate("user-dashboard");
+      } else {
+        alert("E-mail ou senha inválidos!");
+      }
+    } catch (error) {
+      console.error('Erro ao fazer login:', error);
+      alert("Erro ao fazer login. Tente novamente.");
+    }
   }
 
   const handleChange = (e) => {
@@ -33,12 +44,12 @@ export default function LoginUser({ onLogin, onNavigate }) {
 
         <form onSubmit={handleSubmit}>
           <div className="form-group">
-            <label htmlFor="username">Usuário de Login:</label>
+            <label htmlFor="email">E-mail:</label>
             <input
-              type="text"
-              id="username"
-              name="username"
-              value={formData.username}
+              type="email"
+              id="email"
+              name="email"
+              value={formData.email}
               onChange={handleChange}
               required
             />
@@ -78,10 +89,10 @@ export default function LoginUser({ onLogin, onNavigate }) {
                   background: "none",
                   border: "none",
                   color: "#6b9b76",
-                  textDecoration: "none", 
+                  textDecoration: "none",
                   cursor: "pointer",
                   marginLeft: "5px",
-                  fontWeight: "bold" 
+                  fontWeight: "bold"
                 }}
               >
                 Cadastre-se
@@ -114,9 +125,9 @@ export default function LoginUser({ onLogin, onNavigate }) {
               background: "none",
               border: "none",
               color: "#6b9b76",
-              textDecoration: "none", 
+              textDecoration: "none",
               cursor: "pointer",
-              fontWeight: "bold" 
+              fontWeight: "bold"
             }}
           >
             Login Administrador

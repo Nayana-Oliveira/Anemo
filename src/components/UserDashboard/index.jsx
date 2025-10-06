@@ -10,7 +10,7 @@ export default function UserDashboard({ user, onNavigate, onLogout }) {
     { id: "account", label: "Minha conta", icon: "/assets/do-utilizador.png" },
     { id: "data", label: "Meus dados", icon: "/assets/documento.png" },
     { id: "addresses", label: "Meus endereços", icon: "/assets/mapa.png" },
-    { id: "orders", label: "Pedidos", icon: "/assets/editar.png" }, 
+    { id: "orders", label: "Pedidos", icon: "/assets/editar.png" },
     { id: "exchanges", label: "Trocas e devoluções", icon: "/assets/exchange-alt.png" },
     { id: "logout", label: "Sair", icon: "/assets/saida.png" },
   ]
@@ -52,25 +52,25 @@ export default function UserDashboard({ user, onNavigate, onLogout }) {
                 <div>
                   <div style={{ marginBottom: "20px" }}>
                     <strong style={{ color: "#333" }}>Nome completo</strong>
-                    <p style={{ color: "#666", margin: "5px 0" }}>Nome fictício</p>
+                    <p style={{ color: "#666", margin: "5px 0" }}>{user?.fullName || 'Nome não encontrado'}</p>
                   </div>
                   <div style={{ marginBottom: "20px" }}>
                     <strong style={{ color: "#333" }}>E-mail:</strong>
-                    <p style={{ color: "#666", margin: "5px 0" }}>email fictício</p>
+                    <p style={{ color: "#666", margin: "5px 0" }}>{user?.email || 'E-mail não encontrado'}</p>
                   </div>
                   <div style={{ marginBottom: "20px" }}>
                     <strong style={{ color: "#333" }}>CPF:</strong>
-                    <p style={{ color: "#666", margin: "5px 0" }}>111.111.111-11</p>
+                    <p style={{ color: "#666", margin: "5px 0" }}>{user?.cpf || 'CPF não encontrado'}</p>
                   </div>
                 </div>
                 <div>
                   <div style={{ marginBottom: "20px" }}>
                     <strong style={{ color: "#333" }}>Data de nascimento:</strong>
-                    <p style={{ color: "#666", margin: "5px 0" }}>01/01/0001</p>
+                    <p style={{ color: "#666", margin: "5px 0" }}>{user?.birthDate || 'Data não encontrada'}</p>
                   </div>
                   <div style={{ marginBottom: "20px" }}>
                     <strong style={{ color: "#333" }}>Telefone:</strong>
-                    <p style={{ color: "#666", margin: "5px 0" }}>11-99999999</p>
+                    <p style={{ color: "#666", margin: "5px 0" }}>{user?.phone || 'Telefone não encontrado'}</p>
                   </div>
                   <div style={{ display: "flex", alignItems: "center", gap: "20px" }}>
                     <div
@@ -121,26 +121,26 @@ export default function UserDashboard({ user, onNavigate, onLogout }) {
               <form>
                 <div className="form-group">
                   <label>Nome completo:</label>
-                  <input type="text" defaultValue="Nome fictício" />
+                  <input type="text" defaultValue={user?.fullName} />
                 </div>
                 <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "20px" }}>
                   <div className="form-group">
                     <label>Data de nascimento:</label>
-                    <input type="date" defaultValue="0001-01-01" />
+                    <input type="date" defaultValue={user?.birthDate} />
                   </div>
                   <div className="form-group">
                     <label>CPF:</label>
-                    <input type="text" defaultValue="111.111.111-11" />
+                    <input type="text" defaultValue={user?.cpf} />
                   </div>
                 </div>
                 <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "20px" }}>
                   <div className="form-group">
                     <label>Telefone:</label>
-                    <input type="tel" defaultValue="11-99999999" />
+                    <input type="tel" defaultValue={user?.phone} />
                   </div>
                   <div className="form-group">
                     <label>E-mail:</label>
-                    <input type="email" defaultValue="email fictício" />
+                    <input type="email" defaultValue={user?.email} />
                   </div>
                 </div>
                 <div style={{ textAlign: "center", marginTop: "30px" }}>

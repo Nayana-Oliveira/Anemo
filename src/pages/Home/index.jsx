@@ -1,9 +1,25 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import "./index.css";
 
 "use client";
 
-export default function HomePage({ onNavigate }) {
+export default function HomePage({ onNavigate, onProductSelect }) {
+  const [products, setProducts] = useState([]);
+
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        const response = await fetch('http://localhost:5010/products');
+        const data = await response.json();
+        setProducts(data);
+      } catch (error) {
+        console.error('Erro ao buscar produtos:', error);
+      }
+    };
+
+    fetchProducts();
+  }, []);
+
   const categories = [
     { name: "Flores Secas", icon: "/assets/FloresSecas.png" },
     { name: "Acessórios", icon: "/assets/acessorios.png" },
@@ -21,46 +37,7 @@ export default function HomePage({ onNavigate }) {
     { name: "Flores", icon: "/assets/flores.png" },
     { name: "Gramas", icon: "/assets/grama.png" },
   ];
-
-  const products = [
-    {
-      name: "Jiboia Verde",
-      price: "R$ 182,90",
-      installments: "ou em até 4x R$ 45,72",
-      image: "/assets/jiboia_verde_.png",
-    },
-    {
-      name: "Jiboia Verde",
-      price: "R$ 182,90",
-      installments: "ou em até 4x R$ 45,72",
-      image: "/assets/jiboia_verde_.png",
-    },
-    {
-      name: "Jiboia Verde",
-      price: "R$ 182,90",
-      installments: "ou em até 4x R$ 45,72",
-      image: "/assets/jiboia_verde_.png",
-    },
-    {
-      name: "Jiboia Verde",
-      price: "R$ 182,90",
-      installments: "ou em até 4x R$ 45,72",
-      image: "/assets/jiboia_verde_.png",
-    },
-    {
-      name: "Jiboia Verde",
-      price: "R$ 182,90",
-      installments: "ou em até 4x R$ 45,72",
-      image: "/assets/jiboia_verde_.png",
-    },
-    {
-      name: "Jiboia Verde",
-      price: "R$ 182,90",
-      installments: "ou em até 4x R$ 45,72",
-      image: "/assets/jiboia_verde_.png",
-    },
-  ];
-
+  
   return (
     <div className="home-page">
       <section className="hero-banner">
@@ -84,13 +61,13 @@ export default function HomePage({ onNavigate }) {
       <section className="products-section">
         <div className="container">
           <div className="product-grid">
-            {products.map((product, index) => (
-              <div key={index} className="product-card" onClick={() => onNavigate("product")}>
-                <img src={product.image || "/assets/placeholder.svg"} alt={product.name} className="product-image" />
-                <div className="product-name">{product.name}</div>
-                <div className="product-price">{product.price}</div>
-                <div className="product-installments">{product.installments}</div>
-                <button className="btn btn-primary">Comprar</button>
+            {products.map((product) => (
+              <div key={product.id} className="product-card" >
+                <img src={product.image || "/assets/placeholder.svg"} alt={product.productName} className="product-image" onClick={() => onProductSelect(product)} />
+                <div className="product-name">{product.productName}</div>
+                <div className="product-price">R$ {parseFloat(product.price).toFixed(2)}</div>
+                <div className="product-installments">ou em até 4x R$ {(product.price / 4).toFixed(2)}</div>
+                <button className="btn btn-primary" onClick={() => onProductSelect(product)}>Comprar</button>
               </div>
             ))}
           </div>
@@ -108,22 +85,6 @@ export default function HomePage({ onNavigate }) {
                   <img src={category.icon} alt={category.name} className="category-icon" />
                 </div>
                 <div className="category-label">{category.name}</div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <section className="products-section">
-        <div className="container">
-          <div className="product-grid">
-            {products.map((product, index) => (
-              <div key={index} className="product-card" onClick={() => onNavigate("product")}>
-                <img src={product.image || "/assets/placeholder.svg"} alt={product.name} className="product-image" />
-                <div className="product-name">{product.name}</div>
-                <div className="product-price">{product.price}</div>
-                <div className="product-installments">{product.installments}</div>
-                <button className="btn btn-primary">Comprar</button>
               </div>
             ))}
           </div>

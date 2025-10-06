@@ -12,14 +12,33 @@ export default function ProductRegistration({ onNavigate }) {
     quantity: "",
     size: "",
     description: "",
+    imageName: "" // Novo campo para o nome da imagem
   })
 
-  const [selectedImages, setSelectedImages] = useState([])
-
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
-    alert("Produto cadastrado com sucesso!")
-    onNavigate("admin-dashboard")
+
+    // Remove o campo temporário 'imageName' e cria o campo 'image' com o caminho completo
+    const { imageName, ...productData } = formData;
+    const finalProductData = {
+      ...productData,
+      image: imageName ? `/assets/${imageName.trim()}` : "/assets/placeholder.svg",
+    };
+
+    try {
+      await fetch('http://localhost:5010/products', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(finalProductData),
+      });
+      alert("Produto cadastrado com sucesso!")
+      onNavigate("admin-dashboard")
+    } catch (error) {
+      console.error('Erro ao cadastrar produto:', error);
+      alert("Erro ao cadastrar produto. Tente novamente.");
+    }
   }
 
   const handleChange = (e) => {
@@ -27,11 +46,6 @@ export default function ProductRegistration({ onNavigate }) {
       ...formData,
       [e.target.name]: e.target.value,
     })
-  }
-
-  const handleImageUpload = (e) => {
-    const files = Array.from(e.target.files)
-    setSelectedImages(files)
   }
 
   return (
@@ -76,6 +90,7 @@ export default function ProductRegistration({ onNavigate }) {
           </h1>
 
           <form onSubmit={handleSubmit}>
+            {/* Campos do formulário ... */}
             <div
               className="form-grid-2"
               style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "30px", marginBottom: "30px" }}
@@ -167,62 +182,37 @@ export default function ProductRegistration({ onNavigate }) {
                 </select>
               </div>
             </div>
-
-            <div
-              className="product-form-grid"
-              style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "30px", marginBottom: "30px" }}
-            >
-              <div className="form-group">
-                <label htmlFor="description">Descrição</label>
-                <textarea
-                  id="description"
-                  name="description"
-                  value={formData.description}
-                  onChange={handleChange}
-                  rows="6"
-                  placeholder="Descreva o produto..."
-                  required
-                />
-              </div>
-
-              <div className="form-group">
-                <label htmlFor="photos">Fotos</label>
-                <div
-                  className="upload-area"
-                  style={{
-                    border: "2px dashed #ddd",
-                    borderRadius: "8px",
-                    padding: "40px",
-                    textAlign: "center",
-                    backgroundColor: "white",
-                    cursor: "pointer",
-                    transition: "border-color 0.3s ease",
-                  }}
-                  onMouseEnter={(e) => (e.currentTarget.style.borderColor = "#6b9b76")}
-                  onMouseLeave={(e) => (e.currentTarget.style.borderColor = "#ddd")}
-                  onClick={() => document.getElementById("photos").click()}
-                >
-                  <div style={{ marginBottom: "15px" }}>
-                    <img src="/assets/visor-da-camera.png" alt="Camera" style={{ width: '48px', height: '48px' }} />
-                  </div>
-
-                  <p style={{ color: "#666", fontSize: "16px", fontWeight: "500" }}>Adicionar fotos</p>
-                  <input
-                    type="file"
-                    id="photos"
-                    multiple
-                    accept="image/*"
-                    onChange={handleImageUpload}
-                    style={{ display: "none" }}
-                  />
-                </div>
-                {selectedImages.length > 0 && (
-                  <div style={{ marginTop: "15px" }}>
-                    <p style={{ color: "#666", fontSize: "14px" }}>{selectedImages.length} arquivo(s) selecionado(s)</p>
-                  </div>
-                )}
-              </div>
+            
+            {/* Campo de Descrição e Imagem */}
+            <div className="form-group">
+              <label htmlFor="description">Descrição</label>
+              <textarea
+                id="description"
+                name="description"
+                value={formData.description}
+                onChange={handleChange}
+                rows="6"
+                placeholder="Descreva o produto..."
+                required
+              />
             </div>
+
+            <div className="form-group">
+              <label htmlFor="imageName">Nome do Arquivo da Imagem</label>
+              <input
+                type="text"
+                id="imageName"
+                name="imageName"
+                value={formData.imageName}
+                onChange={handleChange}
+                placeholder="ex: minha-planta.png"
+                required
+              />
+              <small style={{ color: '#666', marginTop: '5px', display: 'block' }}>
+                *O arquivo da imagem deve ser colocado manualmente na pasta `public/assets`.
+              </small>
+            </div>
+
 
             <div style={{ textAlign: "center", marginTop: "40px" }}>
               <button type="submit" className="btn btn-primary" style={{ minWidth: "150px", fontSize: "18px" }}>

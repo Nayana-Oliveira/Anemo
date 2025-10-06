@@ -15,10 +15,29 @@ export default function RegisterUser({ onNavigate }) {
     confirmPassword: "",
   })
 
-  const handleSubmit = (e) => {
-    e.preventDefault()
-    alert("Cadastro realizado com sucesso!")
-    onNavigate("login-user")
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (formData.password !== formData.confirmPassword) {
+      alert("As senhas não correspondem!");
+      return;
+    }
+
+    const { confirmPassword, ...userData } = formData;
+
+    try {
+      await fetch('http://localhost:5010/users', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(userData),
+      });
+      alert("Cadastro realizado com sucesso!");
+      onNavigate("login-user");
+    } catch (error) {
+      console.error('Erro ao cadastrar usuário:', error);
+      alert("Erro ao cadastrar usuário. Tente novamente.");
+    }
   }
 
   const handleChange = (e) => {

@@ -15,33 +15,50 @@ import ProductRegistration from "./components/ProductRegistration"
 import CartPage from "./components/CartPage"
 
 export default function App() {
-const [currentPage, setCurrentPage] = useState("login-user")
-const [user, setUser] = useState(null)
+  const [currentPage, setCurrentPage] = useState("login-user")
+  const [user, setUser] = useState(null)
+  const [selectedProduct, setSelectedProduct] = useState(null)
+  const [cartItem, setCartItem] = useState(null);
+
+  const handleNavigate = (page) => {
+    setCurrentPage(page);
+  };
+
+  const handleProductSelect = (product) => {
+    setSelectedProduct(product);
+    setCurrentPage("product");
+  };
+  
+  const handleAddToCart = (product, quantity) => {
+    setCartItem({ ...product, quantity });
+    setCurrentPage("cart");
+  };
+
 
   const renderPage = () => {
     switch (currentPage) {
       case "home":
-        return <HomePage onNavigate={setCurrentPage} />
+        return <HomePage onNavigate={handleNavigate} onProductSelect={handleProductSelect} />
       case "login-user":
-        return <LoginUser onNavigate={setCurrentPage} onLogin={setUser} />
+        return <LoginUser onNavigate={handleNavigate} onLogin={setUser} />
       case "login-admin":
-        return <LoginAdmin onNavigate={setCurrentPage} onLogin={setUser} />
+        return <LoginAdmin onNavigate={handleNavigate} onLogin={setUser} />
       case "register-user":
-        return <RegisterUser onNavigate={setCurrentPage} />
+        return <RegisterUser onNavigate={handleNavigate} />
       case "register-admin":
-        return <RegisterAdmin onNavigate={setCurrentPage} />
+        return <RegisterAdmin onNavigate={handleNavigate} />
       case "product":
-        return <ProductDetail onNavigate={setCurrentPage} />
+        return <ProductDetail onNavigate={handleNavigate} product={selectedProduct} onAddToCart={handleAddToCart} />
       case "user-dashboard":
-        return <UserDashboard onNavigate={setCurrentPage} user={user} />
+        return <UserDashboard onNavigate={handleNavigate} user={user} />
       case "admin-dashboard":
-        return <AdminDashboard onNavigate={setCurrentPage} user={user} />
+        return <AdminDashboard onNavigate={handleNavigate} user={user} />
       case "product-registration":
-        return <ProductRegistration onNavigate={setCurrentPage} />
+        return <ProductRegistration onNavigate={handleNavigate} />
       case "cart":
-        return <CartPage onNavigate={setCurrentPage} />
+        return <CartPage onNavigate={handleNavigate} item={cartItem} />
       default:
-        return <HomePage onNavigate={setCurrentPage} />
+        return <HomePage onNavigate={handleNavigate} onProductSelect={handleProductSelect} />
     }
   }
 
@@ -49,7 +66,7 @@ const [user, setUser] = useState(null)
 
   return (
     <div className="app">
-      {showHeaderFooter && <Header onNavigate={setCurrentPage} user={user} />}
+      {showHeaderFooter && <Header onNavigate={handleNavigate} user={user} />}
       <main style={{ flex: 1 }}>{renderPage()}</main>
       {showHeaderFooter && <Footer />}
     </div>

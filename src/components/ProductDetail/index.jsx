@@ -3,12 +3,22 @@
 import { useState } from "react"
 import "./index.css"
 
-export default function ProductDetail({ onNavigate }) {
+export default function ProductDetail({ onNavigate, product, onAddToCart }) {
   const [selectedVase, setSelectedVase] = useState("Plástico")
   const [selectedSize, setSelectedSize] = useState("Pequeno")
   const [selectedColor, setSelectedColor] = useState(0)
   const [quantity, setQuantity] = useState(1)
   const [zipCode, setZipCode] = useState("")
+
+  if (!product) {
+    return (
+      <div className="container" style={{ padding: "40px", textAlign: "center" }}>
+        <h2>Produto não encontrado</h2>
+        <p>Por favor, volte para a página inicial e selecione um produto.</p>
+        <button className="btn btn-primary" onClick={() => onNavigate("home")}>Voltar para Home</button>
+      </div>
+    );
+  }
 
   const categories = [
     "Vasos",
@@ -25,11 +35,11 @@ export default function ProductDetail({ onNavigate }) {
   ]
 
   const productImages = [
-    "/placeholder.svg?key=img1",
-    "/placeholder.svg?key=img2",
-    "/placeholder.svg?key=img3",
-    "/placeholder.svg?key=img4",
-    "/placeholder.svg?key=img5",
+    product.image,
+    "/assets/placeholder.svg?key=img2",
+    "/assets/placeholder.svg?key=img3",
+    "/assets/placeholder.svg?key=img4",
+    "/assets/placeholder.svg?key=img5",
   ]
 
   const colors = ["#e8e8e8", "#d4d4d4", "#b8b8b8", "#a0a0a0"]
@@ -41,17 +51,12 @@ export default function ProductDetail({ onNavigate }) {
     }
   }
 
-  const handleAddToCart = () => {
-    alert("Produto adicionado ao carrinho!")
-    onNavigate("cart")
-  }
-
   const handleCalculateShipping = () => {
     if (zipCode) {
       alert("Frete calculado para CEP: " + zipCode)
     }
   }
-
+  
   return (
     <div style={{ backgroundColor: "white", minHeight: "100vh" }}>
       <nav
@@ -107,7 +112,7 @@ export default function ProductDetail({ onNavigate }) {
             Home
           </button>
           <span style={{ margin: "0 10px" }}>-</span>
-          <span>Jiboia Verde</span>
+          <span>{product.productName}</span>
         </div>
       </div>
 
@@ -158,7 +163,7 @@ export default function ProductDetail({ onNavigate }) {
                   height: "500px",
                   backgroundColor: "#f0f0f0",
                   borderRadius: "15px",
-                  backgroundImage: "url('/placeholder.svg?key=main')",
+                  backgroundImage: `url(${product.image})`,
                   backgroundSize: "cover",
                   backgroundPosition: "center",
                 }}
@@ -167,11 +172,11 @@ export default function ProductDetail({ onNavigate }) {
           </div>
 
           <div>
-            <h1 style={{ fontSize: "36px", fontWeight: "bold", marginBottom: "20px", color: "#333" }}>Jiboia Verde</h1>
+            <h1 style={{ fontSize: "36px", fontWeight: "bold", marginBottom: "20px", color: "#333" }}>{product.productName}</h1>
 
             <div style={{ marginBottom: "30px" }}>
-              <p style={{ fontSize: "28px", fontWeight: "bold", color: "#6b9b76", marginBottom: "5px" }}>R$ 182,90</p>
-              <p style={{ fontSize: "16px", color: "#666" }}>ou em até 4x R$ 45,72</p>
+              <p style={{ fontSize: "28px", fontWeight: "bold", color: "#6b9b76", marginBottom: "5px" }}>R$ {parseFloat(product.price).toFixed(2)}</p>
+              <p style={{ fontSize: "16px", color: "#666" }}>ou em até 4x R$ {(product.price / 4).toFixed(2)}</p>
             </div>
 
             <div style={{ marginBottom: "30px" }}>
@@ -302,7 +307,7 @@ export default function ProductDetail({ onNavigate }) {
                 </div>
 
                 <button
-                  onClick={handleAddToCart}
+                  onClick={() => onAddToCart(product, quantity)}
                   className="btn btn-primary"
                   style={{ flex: 1, fontSize: "18px", fontWeight: "600" }}
                 >
@@ -337,13 +342,10 @@ export default function ProductDetail({ onNavigate }) {
 
             <div>
               <h3 style={{ fontSize: "18px", fontWeight: "600", marginBottom: "15px", color: "#333" }}>
-                Sobre a Jiboia Verde
+                Sobre o(a) {product.productName}
               </h3>
               <p style={{ color: "#666", lineHeight: "1.6", fontSize: "16px" }}>
-                Também conhecida como Hera-do Diabo ou jiboia, a Epipremnum pinnatum é uma planta com folhas brilhantes,
-                cobertas por manchas amarelas. Essa espécie também pode ter manchas brancas - variedade que é conhecida
-                como "Rainha de Mármore". A Epipremnum pinnatum se prende facilmente a estacas ou suportes, podendo ser
-                cultivada como planta trepadeira ou deixada em trilha.
+                {product.description}
               </p>
             </div>
           </div>

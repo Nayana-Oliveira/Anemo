@@ -1,17 +1,29 @@
 "use client"
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import "./index.css";
 
-export default function CartPage({ onNavigate }) {
-  const [cartItem, setCartItem] = useState({
-    name: "Jiboia Verde",
-    price: 182.90,
-    quantity: 1,
-    image: "/assets/jiboia_verde_.png",
-  });
-  
+export default function CartPage({ onNavigate, item }) {
+  const [cartItem, setCartItem] = useState(item);
   const [selectedPayment, setSelectedPayment] = useState(null);
+
+  useEffect(() => {
+    setCartItem(item);
+  }, [item]);
+  
+  if (!cartItem) {
+    return (
+       <div className="cart-page">
+        <div className="container">
+           <h1 className="cart-title">Meu Carrinho</h1>
+           <div style={{textAlign: "center", padding: "40px", backgroundColor: "#fff", borderRadius: "20px"}}>
+             <h2>Seu carrinho está vazio.</h2>
+             <button className="btn btn-primary" style={{marginTop: "20px"}} onClick={() => onNavigate("home")}>Ver produtos</button>
+           </div>
+        </div>
+       </div>
+    )
+  }
 
   const handleQuantityChange = (amount) => {
     setCartItem(prevItem => ({
@@ -91,10 +103,10 @@ export default function CartPage({ onNavigate }) {
           <div className="cart-main">
             <div className="cart-items-box">
               <div className="cart-item">
-                <img src={cartItem.image} alt={cartItem.name} className="cart-item-image" />
+                <img src={cartItem.image} alt={cartItem.productName} className="cart-item-image" />
                 <div className="cart-item-details">
-                  <p className="cart-item-name">{cartItem.name}</p>
-                  <p className="cart-item-price">R$ {cartItem.price.toFixed(2)}</p>
+                  <p className="cart-item-name">{cartItem.productName}</p>
+                  <p className="cart-item-price">R$ {parseFloat(cartItem.price).toFixed(2)}</p>
                 </div>
                 <div className="cart-item-quantity">
                   <button onClick={() => handleQuantityChange(-1)}>-</button>
@@ -130,7 +142,7 @@ export default function CartPage({ onNavigate }) {
             </div>
 
             <h3 className="payment-title">Forma de Pagamento</h3>
-            
+
             <div className="payment-methods">
               <div
                 className={`payment-option ${selectedPayment === 'pix' ? 'active' : ''}`}

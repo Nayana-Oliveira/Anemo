@@ -1,0 +1,7 @@
+{
+    "filmes": [
+        { "id": 1, "titulo": "Inception", "ano": 2010, "genero": "Sci-Fi" },
+        { "id": 2, "titulo": "The Dark Knight", "ano": 2008, "genero": "Action" },
+        { "id": 3, "titulo": "Interstellar", "ano": 2014, "genero": "Sci-Fi" }
+    ]
+}

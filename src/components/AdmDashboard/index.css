@@ -1,0 +1,54 @@
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: 350px 1fr;
+  gap: 40px;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+  align-items: start;
+}
+
+.sidebar-menu {
+  background-color: #f0ebe5;
+  border-radius: 20px;
+  padding: 0;
+  overflow: hidden;
+  height: fit-content;
+}
+
+.menu-item {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  padding: 20px 25px;
+  border-bottom: 1px solid #ddd;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.menu-item:last-child {
+  border-bottom: none;
+}
+
+.menu-item:hover,
+.menu-item.active {
+  background-color: #e8e3dd;
+}
+
+.menu-icon-img {
+  width: 20px;
+  height: 20px;
+  object-fit: contain; 
+}
+
+.menu-label {
+  font-size: 16px;
+  font-weight: 500;
+  color: #333;
+}
+
+.main-content {
+  background-color: #f0ebe5;
+  border-radius: 20px;
+  padding: 40px;
+}

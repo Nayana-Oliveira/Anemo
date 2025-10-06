@@ -1,12 +1,12 @@
 .dashboard-page {
-  background: linear-gradient(135deg, var(--primary) 0%, var(--sidebar-primary) 100%);
+  background: #f0ebe5;
   min-height: 100vh;
   padding: 40px 0;
 }
 
 .dashboard-grid {
   display: grid;
-  grid-template-columns: 350px 1fr;
+  grid-template-columns: 300px 1fr;
   gap: 40px;
   max-width: 1200px;
   margin: 0 auto;
@@ -14,10 +14,11 @@
 }
 
 .sidebar-menu {
-  background: var(--sidebar);
+  background: white;
   border-radius: 20px;
   padding: 0;
   height: fit-content;
+  overflow: hidden;
 }
 
 .menu-item {
@@ -25,69 +26,71 @@
   align-items: center;
   gap: 15px;
   padding: 20px 25px;
-  border-bottom: 1px solid var(--border);
+  border-bottom: 1px solid #eee;
   cursor: pointer;
   transition: background-color 0.3s ease;
   text-decoration: none;
-  color: var(--sidebar-foreground);
-}
-
-.menu-item:first-child {
-  border-top-left-radius: 20px;
-  border-top-right-radius: 20px;
+  color: #333;
 }
 
 .menu-item:last-child {
   border-bottom: none;
-  border-bottom-left-radius: 20px;
-  border-bottom-right-radius: 20px;
 }
 
 .menu-item:hover,
 .menu-item.active {
-  background-color: var(--sidebar-accent);
+  background-color: #f0ebe5;
 }
 
-.menu-icon {
-  font-size: 20px;
-  color: var(--primary);
+.menu-icon-img {
+  width: 20px;
+  height: 20px;
+  object-fit: contain;
 }
 
 .main-content {
-  background: var(--card);
+  background: white;
   border-radius: 20px;
   padding: 40px;
-}
-
-.content-section {
-  margin-bottom: 40px;
 }
 
 .content-section h2 {
   font-size: 24px;
   margin-bottom: 20px;
-  color: var(--foreground);
+  color: #333;
+  font-weight: bold;
 }
 
 .empty-state {
   text-align: center;
   padding: 60px 20px;
-  color: var(--muted-foreground);
+  color: #8E8E8E;
   font-size: 18px;
+  background-color: #f9f9f9;
+  border-radius: 15px;
 }
 
 .user-info-grid {
   display: grid;
   grid-template-columns: 1fr auto;
   gap: 40px;
-  align-items: start;
+  align-items: center;
+}
+
+.user-info-grid p {
+  margin: 8px 0;
+}
+
+.progress-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .progress-circle {
   width: 120px;
   height: 120px;
   border-radius: 50%;
-  background: conic-gradient(var(--primary) 0deg 324deg, var(--sidebar) 324deg 360deg);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -95,41 +98,81 @@
 }
 
 .progress-inner {
-  width: 80px;
-  height: 80px;
-  background: var(--card);
+  width: 90px;
+  height: 90px;
+  background: white;
   border-radius: 50%;
   display: flex;
-  flex-direction: column;
   align-items: center;
   justify-content: center;
 }
 
 .progress-percentage {
-  font-size: 18px;
+  font-size: 24px;
   font-weight: bold;
-  color: var(--primary);
+  color: #333;
 }
 
 .progress-label {
-  font-size: 12px;
-  color: var(--muted-foreground);
   text-align: center;
   margin-top: 10px;
 }
 
+.progress-label p {
+  margin: 0;
+  color: #666;
+}
+
+.complete-now-link {
+  color: #6b9b76;
+  text-decoration: underline;
+  font-size: 14px;
+  cursor: pointer;
+}
+
 .edit-btn {
-  background-color: var(--primary);
-  color: var(--primary-foreground);
+  background-color: #477556;
+  color: white;
   padding: 10px 20px;
   border: none;
   border-radius: 8px;
   cursor: pointer;
   margin-top: 20px;
+  font-weight: 500;
 }
 
 .form-grid-2 {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 20px;
+}
+
+.address-card {
+  background-color: #f9f9f9;
+  border: 1px solid #eee;
+  border-radius: 15px;
+  padding: 20px;
+  margin-bottom: 15px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.address-card p {
+  margin: 4px 0;
+  color: #666;
+}
+
+.btn-edit-address {
+  background-color: transparent;
+  color: #333;
+  border: 1px solid #ccc;
+  padding: 8px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.btn-edit-address:hover {
+    background-color: #eee;
 }

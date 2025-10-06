@@ -21,9 +21,6 @@ export default function HomePage({ onNavigate, onProductSelect, onCategorySelect
   }, []);
 
   const categories = [
-    { name: "Flores Secas", icon: "/assets/FloresSecas.png", id: "flores-secas" },
-    { name: "Acessórios", icon: "/assets/acessorios.png", id: "acessorios" },
-    { name: "Bromelíaceas", icon: "/assets/bromeliaceas.png", id: "bromeliaceas" },
     { name: "Para Presentear", icon: "/assets/presentear.png", id: "para-presentear" },
     { name: "Plantas Grandes", icon: "/assets/plantasGrandes.png", id: "plantas-grandes" },
     { name: "Vasos", icon: "/assets/vasos.png", id: "vasos" },
@@ -32,10 +29,7 @@ export default function HomePage({ onNavigate, onProductSelect, onCategorySelect
   const bottomCategories = [
     { name: "Kit de Sementes", icon: "/assets/sementes.png", id: "sementes" },
     { name: "Flores Comestíveis", icon: "/assets/comestiveis.png", id: "flores-comestiveis" },
-    { name: "Hortaliças", icon: "/assets/hortalicas.png", id: "hortalicas" },
-    { name: "Ervas e Condimentos", icon: "/assets/ervas.png", id: "ervas" },
-    { name: "Flores", icon: "/assets/flores.png", id: "flores" },
-    { name: "Gramas", icon: "/assets/grama.png", id: "gramas" },
+    { name: "Flores", icon: "/assets/flores.png", id: "flores" }
   ];
   
   return (
@@ -60,9 +54,9 @@ export default function HomePage({ onNavigate, onProductSelect, onCategorySelect
 
       <section className="products-section">
         <div className="container">
-          <h2 style={{textAlign: 'center', fontSize: '28px', marginBottom: '40px'}}>Produtos em Destaque</h2>
+          <h2 style={{textAlign: 'center', fontSize: '28px', marginBottom: '40px'}}>Nossos Produtos</h2>
           <div className="product-grid">
-            {products.slice(0, 6).map((product) => ( 
+            {products.map((product) => ( 
               <div key={product.id} className="product-card" >
                 <img src={product.image || "/assets/placeholder.svg"} alt={product.productName} className="product-image" onClick={() => onProductSelect(product)} />
                 <div className="product-name">{product.productName}</div>

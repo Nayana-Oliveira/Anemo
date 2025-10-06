@@ -17,7 +17,8 @@ export default function LoginUser({ onLogin, onNavigate }) {
       const users = response.data; 
 
       if (users.length > 0) {
-        onLogin({ name: users[0].fullName, email: users[0].email }, "user");
+        const loggedInUser = { ...users[0], type: "user" };
+        onLogin(loggedInUser);
         onNavigate("user-dashboard");
       } else {
         alert("E-mail ou senha inválidos!");

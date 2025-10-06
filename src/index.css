@@ -114,8 +114,8 @@ body {
 
 .btn-secondary {
   background-color: transparent;
-  color: var(--secondary);
-  border: 2px solid var(--secondary);
+  color: var(--secondary-foreground);
+  border: 2px solid var(--secondary-foreground);
 }
 
 .btn-secondary:hover {

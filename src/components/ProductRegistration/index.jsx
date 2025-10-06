@@ -67,11 +67,6 @@ export default function ProductRegistration({ onNavigate }) {
           <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
             <div className="logo" onClick={() => onNavigate("home")} style={{ cursor: "pointer" }}>
             </div>
-            <div style={{ color: "white", display: "flex", alignItems: "center", gap: "10px" }}>
-                <div style={{ width: "30px", height: "30px", backgroundColor: "white", borderRadius: "50%", display: "flex", alignItems: "center", justifyContent: "center", color: "#6b9b76" }}>
-                    👤
-                </div>
-            </div>
           </div>
         </div>
       </header>
@@ -99,15 +94,11 @@ export default function ProductRegistration({ onNavigate }) {
                 <select id="category" name="category" value={formData.category} onChange={handleChange} required>
                   <option value="">Selecione uma categoria</option>
                   <option value="plantas-grandes">Plantas Grandes</option>
-                  <option value="flores-secas">Flores Secas</option>
+                  <option value="ppara-presentear">Para Presentear</option>
                   <option value="vasos">Vasos</option>
-                  <option value="acessorios">Acessórios</option>
                   <option value="sementes">Kit de Sementes</option>
                   <option value="flores-comestiveis">Flores Comestíveis</option>
-                  <option value="hortalicas">Hortaliças</option>
-                  <option value="ervas">Ervas e Condimentos</option>
                   <option value="flores">Flores</option>
-                  <option value="gramas">Gramas</option>
                 </select>
               </div>
               <div className="form-group">

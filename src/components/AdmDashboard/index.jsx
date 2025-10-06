@@ -3,31 +3,46 @@
 import { useState, useEffect } from "react";
 import "./index.css";
 
-export default function AdminDashboard({ user, onNavigate }) {
-  const [activeSection, setActiveSection] = useState("account");
+export default function AdminDashboard({ user, onNavigate, onEditProduct }) {
+  const [activeSection, setActiveSection] = useState("products");
   const [products, setProducts] = useState([]);
+
+  const fetchProducts = async () => {
+    try {
+      const response = await fetch('http://localhost:5010/products');
+      const data = await response.json();
+      setProducts(data);
+    } catch (error) {
+      console.error('Erro ao buscar produtos:', error);
+    }
+  };
 
   useEffect(() => {
     if (activeSection === "products") {
-      const fetchProducts = async () => {
-        try {
-          const response = await fetch('http://localhost:5010/products');
-          const data = await response.json();
-          setProducts(data);
-        } catch (error) {
-          console.error('Erro ao buscar produtos:', error);
-        }
-      };
       fetchProducts();
     }
   }, [activeSection]);
+
+  const handleDelete = async (productId) => {
+    if (window.confirm("Tem certeza que deseja excluir este produto?")) {
+      try {
+        await fetch(`http://localhost:5010/products/${productId}`, {
+          method: 'DELETE',
+        });
+        alert("Produto excluído com sucesso!");
+        fetchProducts();
+      } catch (error) {
+        console.error('Erro ao excluir produto:', error);
+        alert("Erro ao excluir produto.");
+      }
+    }
+  };
 
   const menuItems = [
     { id: "account", label: "Minha conta", icon: "/assets/do-utilizador.png" },
     { id: "products", label: "Meus produtos", icon: "/assets/editar.png" },
     { id: "addresses", label: "Meus endereços", icon: "/assets/mapa.png" },
     { id: "register-product", label: "Cadastrar produtos", icon: "/assets/mais.png" },
-    { id: "exchanges", label: "Trocas e devoluções", icon: "/assets/exchange-alt.png" },
     { id: "logout", label: "Sair", icon: "/assets/saida.png" },
   ];
 
@@ -36,6 +51,8 @@ export default function AdminDashboard({ user, onNavigate }) {
       onNavigate("login-admin");
     } else if (itemId === "register-product") {
       onNavigate("product-registration");
+    } else if (itemId === "edit-product") {
+      setActiveSection("products");
     } else {
       setActiveSection(itemId);
     }
@@ -50,20 +67,20 @@ export default function AdminDashboard({ user, onNavigate }) {
               Dados do Administrador:
             </h2>
             <div style={{ backgroundColor: "white", borderRadius: "15px", padding: "40px" }}>
-                <div>
-                  <div style={{ marginBottom: "20px" }}>
-                    <strong style={{ color: "#333" }}>Nome completo</strong>
-                    <p style={{ color: "#666", margin: "5px 0" }}>{user?.fullName || 'Nome não encontrado'}</p>
-                  </div>
-                  <div style={{ marginBottom: "20px" }}>
-                    <strong style={{ color: "#333" }}>E-mail:</strong>
-                    <p style={{ color: "#666", margin: "5px 0" }}>{user?.email || 'E-mail não encontrado'}</p>
-                  </div>
-                  <div style={{ marginBottom: "20px" }}>
-                    <strong style={{ color: "#333" }}>CNPJ:</strong>
-                    <p style={{ color: "#666", margin: "5px 0" }}>{user?.cnpj || 'CNPJ não encontrado'}</p>
-                  </div>
+              <div>
+                <div style={{ marginBottom: "20px" }}>
+                  <strong style={{ color: "#333" }}>Nome completo</strong>
+                  <p style={{ color: "#666", margin: "5px 0" }}>{user?.fullName || 'Nome não encontrado'}</p>
                 </div>
+                <div style={{ marginBottom: "20px" }}>
+                  <strong style={{ color: "#333" }}>E-mail:</strong>
+                  <p style={{ color: "#666", margin: "5px 0" }}>{user?.email || 'E-mail não encontrado'}</p>
+                </div>
+                <div style={{ marginBottom: "20px" }}>
+                  <strong style={{ color: "#333" }}>CNPJ:</strong>
+                  <p style={{ color: "#666", margin: "5px 0" }}>{user?.cnpj || 'CNPJ não encontrado'}</p>
+                </div>
+              </div>
             </div>
           </div>
         );
@@ -71,20 +88,40 @@ export default function AdminDashboard({ user, onNavigate }) {
       case "products":
         return (
           <div>
-            <h2 style={{ fontSize: "24px", fontWeight: "bold", marginBottom: "30px", color: "#333" }}>Meus Produtos</h2>
-            <div style={{ backgroundColor: "white", borderRadius: "15px", padding: "40px", color: "#666", fontSize: "18px" }}>
+            <div className="products-header">
+              <h2 style={{ fontSize: "24px", fontWeight: "bold", color: "#333" }}>Meus Produtos</h2>
+              <button className="btn btn-primary" onClick={() => onNavigate("product-registration")}>
+                Adicionar Produto
+              </button>
+            </div>
+            <div className="products-list">
               {products.length > 0 ? (
-                <ul>
-                  {products.map(product => (
-                    <li key={product.id}>{product.productName} - R$ {product.price}</li>
-                  ))}
-                </ul>
+                <table>
+                  <thead>
+                    <tr>
+                      <th>Imagem</th>
+                      <th>Nome</th>
+                      <th>Preço</th>
+                      <th>Ações</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {products.map(product => (
+                      <tr key={product.id}>
+                        <td><img src={product.image} alt={product.productName} className="product-list-image" /></td>
+                        <td>{product.productName}</td>
+                        <td>R$ {parseFloat(product.price).toFixed(2)}</td>
+                        <td className="product-actions">
+                          <button className="btn-edit" onClick={() => onEditProduct(product)}>Editar</button>
+                          <button className="btn-delete" onClick={() => handleDelete(product.id)}>Excluir</button>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
               ) : (
                 <p>Nenhum produto cadastrado ainda.</p>
               )}
-              <button className="btn btn-primary" style={{ marginTop: "20px" }} onClick={() => onNavigate("product-registration")}>
-                Cadastrar Novo Produto
-              </button>
             </div>
           </div>
         );
@@ -103,22 +140,6 @@ export default function AdminDashboard({ user, onNavigate }) {
             </div>
           </div>
         );
-
-      case "exchanges":
-        return (
-          <div>
-            <h2 style={{ fontSize: "24px", fontWeight: "bold", marginBottom: "30px", color: "#333" }}>
-              Trocas e Devoluções
-            </h2>
-            <div style={{ backgroundColor: "white", borderRadius: "15px", padding: "40px", textAlign: "center", color: "#666", fontSize: "18px" }}>
-              <p>Nenhuma solicitação de troca ou devolução.</p>
-              <button className="btn btn-secondary" style={{ marginTop: "20px" }}>
-                Gerenciar Solicitações
-              </button>
-            </div>
-          </div>
-        );
-
       default:
         return null;
     }

@@ -4,11 +4,11 @@
       "id": "a0a1",
       "productName": "Tostão Rosa",
       "category": "flores",
-      "price": "71.90",
+      "price": "75.90",
       "quantity": "2",
       "size": "pequeno",
       "description": "A Tostão Rosa, também conhecida como dinheiro-em-penca, é uma planta encantadora que chama atenção por suas pequenas folhas arredondadas em tons de verde e rosa delicado. Apesar de parecer frágil, ela é bastante resistente quando recebe os cuidados adequados. Para manter suas cores vivas e a folhagem saudável, é importante que receba pelo menos 2 horas diárias de sol.\nSuas folhas crescem de forma pendente, formando uma linda cascata natural que se espalha pelas bordas dos vasos, tornando-a perfeita para vasos suspensos ou como forração. A textura delicada e o contraste das cores dão um toque especial e hipnotizante à decoração.\nMuito procurada por quem deseja um visual alegre e moderno, a Tostão Rosa é uma das plantas mais populares da nossa loja. Confira nossos artigos com dicas de cultivo para manter sua planta sempre bonita e cheia de vida.",
-      "image": "/assets/Tostao-rosa.png"
+      "image": "/products/Tostao-rosa.png"
     },
     {
       "id": "a670",
@@ -19,7 +19,7 @@
       "quantity": "3",
       "size": "pequeno",
       "description": "A palmeira Areca Bambu tem um alto requinte para ambientes internos e externos que dá um toque de elegância e tropicalismo a qualquer sala ou cômodo da casa. Numerosos caules surgem da base para produzir folhas que se parecem um pouco com o bambu. Suas folhas dão boa umidade para a casa e purificam o ar, filtrando os poluentes. Ela é considerada uma das melhores plantas nesse segmento.",
-      "image": "/assets/Areca-Bambu.png"
+      "image": "/products/Areca-Bambu.png"
     },
     {
       "id": "582c",
@@ -30,10 +30,53 @@
       "quantity": "30",
       "size": "pequeno",
       "description": "O Cachepô Freia Branco é um vaso decorativo elegante e versátil, ideal para compor ambientes internos ou externos. Com acabamento liso na cor branca, ele traz um visual clean e moderno, combinando facilmente com diferentes estilos de decoração. Pode ser usado para acomodar vasos de plantas, flores naturais ou artificiais, valorizando o arranjo e deixando o espaço mais sofisticado. Além disso, sua tonalidade neutra destaca ainda mais o verde das folhagens e as cores das flores.\n",
-      "image": "/assets/Cachepo-com-flores.jpg",
+      "image": "/products/Cachepo-com-flores.jpg",
       "images": [
-        "/assets/Cachepo-vazio.png",
-        "/assets/Cachepo-com-flores.jpg"
+        "/products/Cachepo-vazio.png",
+        "/products/Cachepo-com-flores.jpg"
+      ]
+    },
+    {
+      "id": "fde1",
+      "productName": "Kit de Cultivo Microverdes de Repolho Roxo e Rúcula Isla",
+      "productId": "4",
+      "category": "sementes",
+      "price": "18.90",
+      "quantity": "5",
+      "size": "pequeno",
+      "description": "O Kit de Cultivo de Microverdes de Repolho Roxo e Rúcula Isla é uma opção prática e sustentável para quem deseja cultivar alimentos frescos em casa. Ideal para pequenos espaços, o kit contém tudo o que você precisa para iniciar o plantio: sementes selecionadas, substrato e bandeja de cultivo.\n\nOs microverdes de repolho roxo apresentam folhas delicadas e coloração vibrante, ricas em nutrientes e com sabor levemente adocicado. Já os microverdes de rúcula têm um toque picante característico, perfeito para temperar saladas e pratos.\n\nEm poucos dias, é possível colher vegetais frescos, saudáveis e cheios de sabor, sem necessidade de experiência prévia em jardinagem. \n",
+      "image": "/products/kit_de_cultivo.png",
+      "images": [
+        "/products/kit_de_cultivo.png",
+        "/products/products/kit_de_cultivo_microverdes_de_repolho_roxo_e_rucula_isla.png"
+      ]
+    },
+    {
+      "id": "2a15",
+      "productName": "Feijão Borboleta (Clitoria Ternatea)",
+      "productId": "5",
+      "category": "flores-comestiveis",
+      "price": "15.50",
+      "quantity": "60",
+      "size": "pequeno",
+      "description": "O **Feijão-borboleta** (*Clitoria ternatea*), também conhecido como **ervilha-borboleta** ou **blue pea**, é uma planta trepadeira ornamental e medicinal, originária da Ásia tropical. Suas flores chamam atenção pela coloração azul intensa (podendo variar para branco ou lilás em algumas variedades), lembrando o formato de uma borboleta.\n\nDe crescimento rápido, pode ser cultivada em vasos, cercas ou treliças, preferindo locais ensolarados e solos bem drenados. Além de embelezar jardins, suas flores são comestíveis e muito usadas para fazer chás naturais, que mudam de cor conforme o pH, e também para corantes alimentícios naturais. A planta também é valorizada por suas propriedades antioxidantes e calmantes.\n",
+      "image": "/products/FEIJAO-BORBOLETA-CORTE.png",
+      "images": [
+        "/products/FEIJAO-BORBOLETA-CORTE.png"
+      ]
+    },
+    {
+      "id": "04c2",
+      "productName": "Buquê de Flores \"A Noite Estrelada\" - Van Gogh",
+      "productId": "6",
+      "category": "para-presentear",
+      "price": "150.00",
+      "quantity": "3",
+      "size": "medio",
+      "description": "O **Buquê de Flores “A Noite Estrelada” – Van Gogh** é uma composição inspirada na famosa obra do pintor holandês, trazendo tons intensos de azul, amarelo e branco. As flores são cuidadosamente selecionadas para representar o movimento e a energia das pinceladas de Van Gogh, criando um arranjo elegante, artístico e cheio de personalidade. Ideal para presentear em ocasiões especiais ou decorar ambientes com um toque de arte e sofisticação.",
+      "image": "/products/Buqu_de_Flores_A_noite_estrelada_Van_Gogh_4.png",
+      "images": [
+        "/products/Buqu_de_Flores_A_noite_estrelada_Van_Gogh_4.png"
       ]
     }
   ],
@@ -44,9 +87,20 @@
       "birthDate": "2002-01-01",
       "cpf": "55771307866",
       "phone": "123456789",
-      "mobile": "123456789",
+      "mobile": "",
       "email": "teste@anemo.com",
-      "password": "senha123"
+      "password": "senha123",
+      "addresses": [
+        {
+          "id": "addr1",
+          "street": "Av. Eng. Eusébio Stevaux",
+          "number": "823",
+          "neighborhood": "Santo Amaro",
+          "city": "São Paulo",
+          "state": "SP",
+          "zipCode": "04696-000"
+        }
+      ]
     }
   ],
   "admins": [

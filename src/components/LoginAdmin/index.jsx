@@ -16,7 +16,8 @@ export default function LoginAdmin({ onLogin, onNavigate }) {
       const response = await fetch(`http://localhost:5010/admins?email=${formData.email}&password=${formData.password}`);
       const admins = await response.json();
       if (admins.length > 0) {
-        onLogin({ name: admins[0].fullName, email: admins[0].email, ...admins[0] }, "admin");
+        const loggedInAdmin = { ...admins[0], type: "admin" };
+        onLogin(loggedInAdmin);
         onNavigate("admin-dashboard");
       } else {
         alert("E-mail ou senha de administrador inválidos!");

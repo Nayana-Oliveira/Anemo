@@ -1,288 +1,191 @@
 "use client"
 
-import { useState } from "react"
-import "./index.css"
+import { useState, useEffect } from "react";
+import axios from 'axios';
+import "./index.css";
 
-export default function UserDashboard({ user, onNavigate, onLogout }) {
-  const [activeSection, setActiveSection] = useState("account")
+export default function UserDashboard({ user, onNavigate, onUpdateUser }) {
+  const [activeSection, setActiveSection] = useState("account");
+  const [formData, setFormData] = useState(user || {});
+
+  useEffect(() => {
+    setFormData(user || {});
+  }, [user]);
+
+  const handleDataChange = (e) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  const handleDataSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await axios.put(`http://localhost:5010/users/${user.id}`, formData);
+      onUpdateUser(response.data);
+      alert("Dados atualizados com sucesso!");
+      setActiveSection("account");
+    } catch (error) {
+      console.error("Erro ao atualizar dados:", error);
+      alert("Não foi possível atualizar os dados. Tente novamente.");
+    }
+  };
+
+  const calculateProfileCompletion = () => {
+    if (!user) return 0;
+    const fields = ['fullName', 'birthDate', 'cpf', 'phone', 'mobile', 'email'];
+    const filledFields = fields.filter(field => user[field] && user[field].trim() !== '');
+    return Math.round((filledFields.length / fields.length) * 100);
+  };
+
+  const completionPercentage = calculateProfileCompletion();
 
   const menuItems = [
     { id: "account", label: "Minha conta", icon: "/assets/do-utilizador.png" },
     { id: "data", label: "Meus dados", icon: "/assets/documento.png" },
     { id: "addresses", label: "Meus endereços", icon: "/assets/mapa.png" },
     { id: "orders", label: "Pedidos", icon: "/assets/editar.png" },
-    { id: "exchanges", label: "Trocas e devoluções", icon: "/assets/exchange-alt.png" },
     { id: "logout", label: "Sair", icon: "/assets/saida.png" },
-  ]
+  ];
 
   const handleMenuClick = (itemId) => {
     if (itemId === "logout") {
       onNavigate("login-user");
     } else {
-      setActiveSection(itemId)
+      setActiveSection(itemId);
     }
-  }
+  };
+
   const renderContent = () => {
     switch (activeSection) {
       case "account":
         return (
-          <div>
-            <h2 style={{ fontSize: "24px", fontWeight: "bold", marginBottom: "30px", color: "#333" }}>
-              Dados do último pedido:
-            </h2>
-            <div
-              style={{
-                backgroundColor: "white",
-                borderRadius: "15px",
-                padding: "40px",
-                textAlign: "center",
-                color: "#666",
-                fontSize: "18px",
-                marginBottom: "40px",
-              }}
-            >
-              Sem pedidos anteriores. :(
-            </div>
-
-            <h2 style={{ fontSize: "24px", fontWeight: "bold", marginBottom: "30px", color: "#333" }}>
-              Dados pessoais:
-            </h2>
-            <div style={{ backgroundColor: "white", borderRadius: "15px", padding: "40px" }}>
-              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "40px", alignItems: "start" }}>
-                <div>
-                  <div style={{ marginBottom: "20px" }}>
-                    <strong style={{ color: "#333" }}>Nome completo</strong>
-                    <p style={{ color: "#666", margin: "5px 0" }}>{user?.fullName || 'Nome não encontrado'}</p>
-                  </div>
-                  <div style={{ marginBottom: "20px" }}>
-                    <strong style={{ color: "#333" }}>E-mail:</strong>
-                    <p style={{ color: "#666", margin: "5px 0" }}>{user?.email || 'E-mail não encontrado'}</p>
-                  </div>
-                  <div style={{ marginBottom: "20px" }}>
-                    <strong style={{ color: "#333" }}>CPF:</strong>
-                    <p style={{ color: "#666", margin: "5px 0" }}>{user?.cpf || 'CPF não encontrado'}</p>
-                  </div>
-                </div>
-                <div>
-                  <div style={{ marginBottom: "20px" }}>
-                    <strong style={{ color: "#333" }}>Data de nascimento:</strong>
-                    <p style={{ color: "#666", margin: "5px 0" }}>{user?.birthDate || 'Data não encontrada'}</p>
-                  </div>
-                  <div style={{ marginBottom: "20px" }}>
-                    <strong style={{ color: "#333" }}>Telefone:</strong>
-                    <p style={{ color: "#666", margin: "5px 0" }}>{user?.phone || 'Telefone não encontrado'}</p>
-                  </div>
-                  <div style={{ display: "flex", alignItems: "center", gap: "20px" }}>
-                    <div
-                      style={{
-                        width: "120px",
-                        height: "120px",
-                        borderRadius: "50%",
-                        border: "8px solid #6b9b76",
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "center",
-                        fontSize: "48px",
-                        fontWeight: "bold",
-                        color: "#6b9b76",
-                        backgroundColor: "white",
-                      }}
-                    >
-                      90%
-                    </div>
-                    <div>
-                      <p style={{ color: "#6b9b76", fontWeight: "600", fontSize: "16px" }}>Complete</p>
-                      <p style={{ color: "#6b9b76", fontWeight: "600", fontSize: "16px" }}>seus</p>
-                      <p style={{ color: "#6b9b76", fontWeight: "600", fontSize: "16px" }}>dados</p>
-                    </div>
-                  </div>
-                </div>
+          <div className="content-section">
+            <h2>Minha Conta</h2>
+            <div className="user-info-grid">
+              <div>
+                <p><strong>Nome:</strong> {user?.fullName || 'Não informado'}</p>
+                <p><strong>E-mail:</strong> {user?.email || 'Não informado'}</p>
+                 <button className="edit-btn" onClick={() => setActiveSection("data")}>
+                    Editar meus dados
+                 </button>
               </div>
-              <div style={{ textAlign: "center", marginTop: "30px" }}>
-                <button
-                  className="btn btn-primary"
-                  onClick={() => setActiveSection("data")}
-                  style={{ minWidth: "180px" }}
+              <div className="progress-section">
+                <div 
+                  className="progress-circle" 
+                  style={{ background: `conic-gradient(#477556 0deg ${completionPercentage * 3.6}deg, #e0e0e0 ${completionPercentage * 3.6}deg 360deg)` }}
                 >
-                  Editar meus dados
-                </button>
+                  <div className="progress-inner">
+                    <span className="progress-percentage">{completionPercentage}%</span>
+                  </div>
+                </div>
+                <div className="progress-label">
+                  <p>Dados completos</p>
+                   {completionPercentage < 100 && (
+                     <a href="#" className="complete-now-link" onClick={() => setActiveSection("data")}>Completar agora</a>
+                  )}
+                </div>
               </div>
             </div>
           </div>
-        )
+        );
 
       case "data":
         return (
-          <div>
-            <h2 style={{ fontSize: "24px", fontWeight: "bold", marginBottom: "30px", color: "#333" }}>
-              Editar Dados Pessoais
-            </h2>
-            <div style={{ backgroundColor: "white", borderRadius: "15px", padding: "40px" }}>
-              <form>
+          <div className="content-section">
+            <h2>Meus Dados Pessoais</h2>
+            <form onSubmit={handleDataSubmit}>
+              <div className="form-group">
+                <label>Nome completo:</label>
+                <input type="text" name="fullName" value={formData.fullName || ''} onChange={handleDataChange} />
+              </div>
+              <div className="form-grid-2">
                 <div className="form-group">
-                  <label>Nome completo:</label>
-                  <input type="text" defaultValue={user?.fullName} />
+                  <label>Data de nascimento:</label>
+                  <input type="date" name="birthDate" value={formData.birthDate || ''} onChange={handleDataChange} />
                 </div>
-                <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "20px" }}>
-                  <div className="form-group">
-                    <label>Data de nascimento:</label>
-                    <input type="date" defaultValue={user?.birthDate} />
-                  </div>
-                  <div className="form-group">
-                    <label>CPF:</label>
-                    <input type="text" defaultValue={user?.cpf} />
-                  </div>
+                <div className="form-group">
+                  <label>CPF:</label>
+                  <input type="text" name="cpf" value={formData.cpf || ''} onChange={handleDataChange} />
                 </div>
-                <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "20px" }}>
-                  <div className="form-group">
-                    <label>Telefone:</label>
-                    <input type="tel" defaultValue={user?.phone} />
-                  </div>
-                  <div className="form-group">
-                    <label>E-mail:</label>
-                    <input type="email" defaultValue={user?.email} />
-                  </div>
+              </div>
+              <div className="form-grid-2">
+                <div className="form-group">
+                  <label>Telefone:</label>
+                  <input type="tel" name="phone" value={formData.phone || ''} onChange={handleDataChange} />
                 </div>
-                <div style={{ textAlign: "center", marginTop: "30px" }}>
-                  <button type="submit" className="btn btn-primary" style={{ minWidth: "150px" }}>
-                    Salvar Alterações
-                  </button>
+                <div className="form-group">
+                  <label>Celular:</label>
+                  <input type="tel" name="mobile" value={formData.mobile || ''} onChange={handleDataChange} />
                 </div>
-              </form>
-            </div>
+              </div>
+              <div className="form-group">
+                <label>E-mail:</label>
+                <input type="email" name="email" value={formData.email || ''} onChange={handleDataChange} />
+              </div>
+              <div style={{ textAlign: "right", marginTop: "20px" }}>
+                <button type="submit" className="btn btn-primary">Salvar Alterações</button>
+              </div>
+            </form>
           </div>
-        )
+        );
 
       case "addresses":
         return (
-          <div>
-            <h2 style={{ fontSize: "24px", fontWeight: "bold", marginBottom: "30px", color: "#333" }}>
-              Meus Endereços
-            </h2>
-            <div
-              style={{
-                backgroundColor: "white",
-                borderRadius: "15px",
-                padding: "40px",
-                textAlign: "center",
-                color: "#666",
-                fontSize: "18px",
-              }}
-            >
-              <p>Nenhum endereço cadastrado.</p>
-              <button className="btn btn-primary" style={{ marginTop: "20px" }}>
-                Adicionar Endereço
-              </button>
-            </div>
+          <div className="content-section">
+            <h2>Meus Endereços</h2>
+            {user?.addresses && user.addresses.length > 0 ? user.addresses.map(addr => (
+              <div key={addr.id} className="address-card">
+                <div>
+                  <p><strong>{addr.street}, {addr.number}</strong></p>
+                  <p>{addr.neighborhood} - {addr.city}, {addr.state} | CEP: {addr.zipCode}</p>
+                </div>
+                <button className="btn-edit-address">Editar</button>
+              </div>
+            )) : (
+              <div className="empty-state">
+                <p>Nenhum endereço cadastrado.</p>
+              </div>
+            )}
+            <button className="btn btn-primary" style={{ marginTop: "20px" }}>Adicionar Endereço</button>
           </div>
-        )
+        );
 
       case "orders":
         return (
-          <div>
-            <h2 style={{ fontSize: "24px", fontWeight: "bold", marginBottom: "30px", color: "#333" }}>Meus Pedidos</h2>
-            <div
-              style={{
-                backgroundColor: "white",
-                borderRadius: "15px",
-                padding: "40px",
-                textAlign: "center",
-                color: "#666",
-                fontSize: "18px",
-              }}
-            >
-              Sem pedidos anteriores. :(
+          <div className="content-section">
+            <h2>Meus Pedidos</h2>
+            <div className="empty-state">
+              <p>Você ainda não fez nenhum pedido.</p>
             </div>
           </div>
-        )
-
-      case "exchanges":
-        return (
-          <div>
-            <h2 style={{ fontSize: "24px", fontWeight: "bold", marginBottom: "30px", color: "#333" }}>
-              Trocas e Devoluções
-            </h2>
-            <div
-              style={{
-                backgroundColor: "white",
-                borderRadius: "15px",
-                padding: "40px",
-                textAlign: "center",
-                color: "#666",
-                fontSize: "18px",
-              }}
-            >
-              <p>Nenhuma solicitação de troca ou devolução.</p>
-              <button className="btn btn-secondary" style={{ marginTop: "20px" }}>
-                Solicitar Troca/Devolução
-              </button>
-            </div>
-          </div>
-        )
+        );
 
       default:
-        return null
+        return null;
     }
-  }
+  };
 
   return (
-    <div style={{ backgroundColor: "#6b9b76", minHeight: "100vh" }}>
-      <header style={{ backgroundColor: "#6b9b76", padding: "20px 0" }}>
-        <div className="container">
-          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-            <div className="logo" onClick={() => onNavigate("home")} style={{ cursor: "pointer" }}>
+    <div className="dashboard-page">
+      <div className="dashboard-grid">
+        <div className="sidebar-menu">
+          {menuItems.map((item) => (
+            <div
+              key={item.id}
+              className={`menu-item ${activeSection === item.id ? "active" : ""}`}
+              onClick={() => handleMenuClick(item.id)}
+            >
+              <img src={item.icon} alt="" className="menu-icon-img" />
+              <span>{item.label}</span>
             </div>
-            <div style={{ color: "white", display: "flex", alignItems: "center", gap: "10px" }}>
-            </div>
-          </div>
+          ))}
         </div>
-      </header>
-
-      <div className="container" style={{ padding: "40px 0" }}>
-        <div
-          className="dashboard-grid"
-          style={{ display: "grid", gridTemplateColumns: "350px 1fr", gap: "40px", alignItems: "start" }}
-        >
-          <div
-            className="sidebar-menu"
-            style={{ backgroundColor: "#f0ebe5", borderRadius: "20px", padding: "0", overflow: "hidden" }}
-          >
-            {menuItems.map((item, index) => (
-              <div
-                key={item.id}
-                onClick={() => handleMenuClick(item.id)}
-                style={{
-                  padding: "20px 30px",
-                  borderBottom: index < menuItems.length - 1 ? "1px solid #ddd" : "none",
-                  cursor: "pointer",
-                  display: "flex",
-                  alignItems: "center",
-                  gap: "15px",
-                  backgroundColor: activeSection === item.id ? "white" : "transparent",
-                  transition: "background-color 0.3s ease",
-                }}
-                onMouseEnter={(e) => {
-                  if (activeSection !== item.id) {
-                    e.currentTarget.style.backgroundColor = "#e8e3dd"
-                  }
-                }}
-                onMouseLeave={(e) => {
-                  if (activeSection !== item.id) {
-                    e.currentTarget.style.backgroundColor = "transparent"
-                  }
-                }}
-              >
-                <img src={item.icon} alt="" style={{ width: '20px', height: '20px' }} />
-                <span style={{ fontSize: "16px", fontWeight: "500", color: "#333" }}>{item.label}</span>
-              </div>
-            ))}
-          </div>
-
-          <div className="main-content" style={{ backgroundColor: "#f0ebe5", borderRadius: "20px", padding: "40px" }}>
-            {renderContent()}
-          </div>
+        <div className="main-content">
+          {renderContent()}
         </div>
       </div>
     </div>
-  )
+  );
 }

@@ -9,6 +9,32 @@
       "size": "pequeno",
       "description": "A Tostão Rosa, também conhecida como dinheiro-em-penca, é uma planta encantadora que chama atenção por suas pequenas folhas arredondadas em tons de verde e rosa delicado. Apesar de parecer frágil, ela é bastante resistente quando recebe os cuidados adequados. Para manter suas cores vivas e a folhagem saudável, é importante que receba pelo menos 2 horas diárias de sol.\nSuas folhas crescem de forma pendente, formando uma linda cascata natural que se espalha pelas bordas dos vasos, tornando-a perfeita para vasos suspensos ou como forração. A textura delicada e o contraste das cores dão um toque especial e hipnotizante à decoração.\nMuito procurada por quem deseja um visual alegre e moderno, a Tostão Rosa é uma das plantas mais populares da nossa loja. Confira nossos artigos com dicas de cultivo para manter sua planta sempre bonita e cheia de vida.",
       "image": "/assets/Tostao-rosa.png"
+    },
+    {
+      "id": "a670",
+      "productName": " Areca Bambu",
+      "productId": "1",
+      "category": "plantas-grandes",
+      "price": "91.90",
+      "quantity": "3",
+      "size": "pequeno",
+      "description": "A palmeira Areca Bambu tem um alto requinte para ambientes internos e externos que dá um toque de elegância e tropicalismo a qualquer sala ou cômodo da casa. Numerosos caules surgem da base para produzir folhas que se parecem um pouco com o bambu. Suas folhas dão boa umidade para a casa e purificam o ar, filtrando os poluentes. Ela é considerada uma das melhores plantas nesse segmento.",
+      "image": "/assets/Areca-Bambu.png"
+    },
+    {
+      "id": "582c",
+      "productName": "Cachepô Freia Branco",
+      "productId": "3",
+      "category": "vasos",
+      "price": "141.90",
+      "quantity": "30",
+      "size": "pequeno",
+      "description": "O Cachepô Freia Branco é um vaso decorativo elegante e versátil, ideal para compor ambientes internos ou externos. Com acabamento liso na cor branca, ele traz um visual clean e moderno, combinando facilmente com diferentes estilos de decoração. Pode ser usado para acomodar vasos de plantas, flores naturais ou artificiais, valorizando o arranjo e deixando o espaço mais sofisticado. Além disso, sua tonalidade neutra destaca ainda mais o verde das folhagens e as cores das flores.\n",
+      "image": "/assets/Cachepo-com-flores.jpg",
+      "images": [
+        "/assets/Cachepo-vazio.png",
+        "/assets/Cachepo-com-flores.jpg"
+      ]
     }
   ],
   "users": [

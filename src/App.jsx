@@ -13,12 +13,14 @@ import UserDashboard from "./components/UserDashboard"
 import AdminDashboard from "./components/AdmDashboard"
 import ProductRegistration from "./components/ProductRegistration"
 import CartPage from "./components/CartPage"
+import CategoryPage from "./pages/CategoryPage" 
 
 export default function App() {
   const [currentPage, setCurrentPage] = useState("login-user")
   const [user, setUser] = useState(null)
   const [selectedProduct, setSelectedProduct] = useState(null)
   const [cartItem, setCartItem] = useState(null);
+  const [selectedCategory, setSelectedCategory] = useState(null); 
 
   const handleNavigate = (page) => {
     setCurrentPage(page);
@@ -34,11 +36,16 @@ export default function App() {
     setCurrentPage("cart");
   };
 
+  const handleCategorySelect = (categoryId) => {
+    setSelectedCategory(categoryId);
+    setCurrentPage("category");
+  };
+
 
   const renderPage = () => {
     switch (currentPage) {
       case "home":
-        return <HomePage onNavigate={handleNavigate} onProductSelect={handleProductSelect} />
+        return <HomePage onNavigate={handleNavigate} onProductSelect={handleProductSelect} onCategorySelect={handleCategorySelect} />
       case "login-user":
         return <LoginUser onNavigate={handleNavigate} onLogin={setUser} />
       case "login-admin":
@@ -57,8 +64,10 @@ export default function App() {
         return <ProductRegistration onNavigate={handleNavigate} />
       case "cart":
         return <CartPage onNavigate={handleNavigate} item={cartItem} />
+      case "category":
+        return <CategoryPage categoryId={selectedCategory} onProductSelect={handleProductSelect} onNavigate={handleNavigate} />
       default:
-        return <HomePage onNavigate={handleNavigate} onProductSelect={handleProductSelect} />
+        return <HomePage onNavigate={handleNavigate} onProductSelect={handleProductSelect} onCategorySelect={handleCategorySelect} />
     }
   }
 

@@ -2,6 +2,7 @@
 
 import { useState } from "react"
 import "./index.css"
+import axios from "axios"
 
 export default function LoginUser({ onLogin, onNavigate }) {
   const [formData, setFormData] = useState({
@@ -12,8 +13,9 @@ export default function LoginUser({ onLogin, onNavigate }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch(`http://localhost:5010/users?email=${formData.email}&password=${formData.password}`);
-      const users = await response.json();
+      const response = await axios.get(`http://localhost:5010/users?email=${formData.email}&password=${formData.password}`);
+      const users = response.data; 
+
       if (users.length > 0) {
         onLogin({ name: users[0].fullName, email: users[0].email }, "user");
         onNavigate("user-dashboard");
@@ -24,7 +26,7 @@ export default function LoginUser({ onLogin, onNavigate }) {
       console.error('Erro ao fazer login:', error);
       alert("Erro ao fazer login. Tente novamente.");
     }
-  }
+  };
 
   const handleChange = (e) => {
     setFormData({

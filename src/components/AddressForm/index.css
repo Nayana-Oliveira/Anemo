@@ -1,0 +1,28 @@
+.address-form-page {
+  padding: 40px 0;
+  background-color: #f0ebe5;
+  min-height: 80vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.address-form-card {
+  background-color: white;
+  padding: 40px;
+  border-radius: 20px;
+  width: 100%;
+  max-width: 700px;
+}
+
+.address-form-card h1 {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 15px;
+  margin-top: 30px;
+}

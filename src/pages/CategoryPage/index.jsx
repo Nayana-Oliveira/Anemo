@@ -1,26 +1,12 @@
 import { useState, useEffect } from 'react';
 import './index.css';
 import '../../pages/Home/index.css'; 
-import '../../pages/Home/index.css';
 
 export default function CategoryPage({ categoryId, onProductSelect, onNavigate }) {
   const [products, setProducts] = useState([]);
   const [categoryName, setCategoryName] = useState(categoryId);
 
   useEffect(() => {
-    if (categoryId) {
-      const fetchCategoryProducts = async () => {
-        try {
-          const response = await fetch(`http://localhost:5010/products?category=${categoryId}`);
-          const data = await response.json();
-          setProducts(data);
-          setCategoryName(categoryId.replace(/-/g, ' '));
-        } catch (error) {
-          console.error("Erro ao buscar produtos da categoria:", error);
-        }
-      };
-      fetchCategoryProducts();
-    }
     const fetchCategoryProducts = async () => {
       try {
         let url = 'http://localhost:5010/products';
@@ -59,9 +45,11 @@ export default function CategoryPage({ categoryId, onProductSelect, onNavigate }
                   className="product-image"
                   onClick={() => onProductSelect(product)}
                 />
-                <div className="product-name">{product.productName}</div>
-                <div className="product-price">R$ {parseFloat(product.price).toFixed(2)}</div>
-                <div className="product-installments">ou em até 4x R$ {(parseFloat(product.price) / 4).toFixed(2)}</div>
+                <div className="product-info">
+                  <div className="product-name">{product.productName}</div>
+                  <div className="product-price">R$ {parseFloat(product.price).toFixed(2)}</div>
+                  <div className="product-installments">ou em até 4x R$ {(parseFloat(product.price) / 4).toFixed(2)}</div>
+                </div>
                 <button className="btn btn-primary" onClick={() => onProductSelect(product)}>
                   Ver Produto
                 </button>

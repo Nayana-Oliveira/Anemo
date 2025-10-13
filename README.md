@@ -25,25 +25,27 @@ O e-commerce Anêmo possui as seguintes funcionalidades implementadas:
       - Banner principal de boas-vindas.
       - Grid de categorias de produtos com ícones visuais.
       - Listagem de produtos em destaque.
-      - Seção decorativa para apelo visual.
+  - **Pesquisa de Produtos**:
+      - Barra de pesquisa no cabeçalho para encontrar produtos por nome.
   - **Autenticação**:
       - Telas separadas de Login para **Usuários** (`LoginUser`) e **Administradores** (`LoginAdmin`).
       - Formulários de Cadastro para **Usuários** (`RegisterUser`) e **Administradores** (`RegisterAdmin`).
+      - Funcionalidade de "mostrar/esconder" senha.
   - **Visualização de Produto (`ProductDetail`)**:
       - Página detalhada com galeria de imagens do produto.
-      - Seleção de variações (tamanho, cor, tipo de vaso).
       - Controle de quantidade.
-      - Calculadora de frete.
       - Botão "Adicionar ao Carrinho".
   - **Painel do Usuário (`UserDashboard`)**:
-      - Seções para "Minha Conta", "Meus Dados", "Endereços" e "Pedidos".
-      - Opção de Logout.
+      - Seções para "Minha Conta", "Meus Dados", "Pedidos" e "Sair".
+      - Gerenciamento de endereços (adicionar, editar e excluir) integrado ao painel.
   - **Painel do Administrador (`AdminDashboard`)**:
-      - Gerenciamento de produtos ("Meus Produtos").
+      - Gerenciamento de produtos ("Meus Produtos") com opções para editar e excluir.
       - Atalho para o formulário de cadastro de novos produtos.
       - Visualização de dados de clientes e pedidos.
   - **Cadastro de Produto (`ProductRegistration`)**:
-      - Formulário completo para administradores adicionarem novos produtos ao catálogo, incluindo nome, ID, preço, categoria, quantidade e upload de imagens.
+      - Formulário completo para administradores adicionarem novos produtos ao catálogo.
+  - **Notificações**:
+      - Alertas de feedback (toast) para ações como login, cadastro, e gerenciamento de produtos.
 
 -----
 
@@ -53,10 +55,11 @@ Este projeto foi construído com as seguintes tecnologias:
 
   - **[Vite](https://vitejs.dev/)**: Ferramenta de build moderna e ultrarrápida para desenvolvimento front-end.
   - **[React.js](https://reactjs.org/)**: Biblioteca para construir interfaces de usuário componentizadas.
-  - **[React Router DOM](https://reactrouter.com/)**: Para gerenciamento de rotas em uma SPA.
   - **CSS Moderno**:
-      - CSS Variáveis para theming (dark/light mode).
+      - CSS Variáveis para theming.
       - Flexbox e CSS Grid para layouts complexos e responsivos.
+  - **[React Toastify](https://fkhadra.github.io/react-toastify/introduction)**: Para notificações e alertas.
+  - **[React Icons](https://react-icons.github.io/react-icons/)**: Para ícones.
   - **Fonte**: [Poppins](https://fonts.google.com/specimen/Poppins) (importada via Google Fonts).
   - **Linting**: [ESLint](https://eslint.org/) para manter a qualidade e padronização do código.
 
@@ -69,7 +72,7 @@ Para rodar este projeto localmente, siga os passos abaixo:
 1.  **Clone o repositório:**
 
     ```bash
-    git clone https://github.com/Nayana-Oliveira/Anemo.git
+    git clone [https://github.com/Nayana-Oliveira/Anemo.git](https://github.com/Nayana-Oliveira/Anemo.git)
     ```
 
 2.  **Navegue até a pasta do projeto:**
@@ -98,11 +101,9 @@ Para rodar este projeto localmente, siga os passos abaixo:
 
 A estilização do projeto é centralizada no arquivo `src/index.css`, que contém:
 
-  - **Variáveis CSS (`:root` e `.dark`)**: Define a paleta de cores para os temas claro e escuro, facilitando a customização global.
-  - **Estilos Globais**: Regras para elementos como `body`, containers e botões (`.btn`, `.btn-primary`).
-  - **Componentes Individuais**: Cada componente possui seu próprio arquivo `.css` (ex: `Header/index.css`), mantendo os estilos organizados e escopados.
-
-A fonte principal utilizada é a **Poppins**, importada no topo do `src/index.css`.
+  - **Variáveis CSS (`:root` e `.dark`)**: Define a paleta de cores para os temas claro e escuro.
+  - **Estilos Globais**: Regras para elementos como `body`, containers e botões.
+  - **Componentes Individuais**: Cada componente possui seu próprio arquivo `.css`, mantendo os estilos organizados.
 
 -----
 
@@ -110,7 +111,6 @@ A fonte principal utilizada é a **Poppins**, importada no topo do `src/index.cs
 
 O projeto segue uma estrutura organizada para separar responsabilidades:
 
-```
 Anemo/
 ├── public/
 │   └── assets/       # Imagens estáticas, ícones e logos

@@ -2,13 +2,15 @@
 
 import { useState } from "react"
 import "./index.css"
-
+import { toast } from 'react-toastify';
 
 export default function LoginAdmin({ onLogin, onNavigate }) {
   const [formData, setFormData] = useState({
     email: "",
     password: "",
   })
+  const [showPassword, setShowPassword] = useState(false);
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -18,13 +20,14 @@ export default function LoginAdmin({ onLogin, onNavigate }) {
       if (admins.length > 0) {
         const loggedInAdmin = { ...admins[0], type: "admin" };
         onLogin(loggedInAdmin);
+        toast.success("Login bem-sucedido!");
         onNavigate("admin-dashboard");
       } else {
-        alert("E-mail ou senha de administrador inválidos!");
+        toast.error("E-mail ou senha de administrador inválidos!");
       }
     } catch (error) {
       console.error('Erro ao fazer login de administrador:', error);
-      alert("Erro ao fazer login. Tente novamente.");
+      toast.error("Erro ao fazer login. Tente novamente.");
     }
   }
 
@@ -52,14 +55,31 @@ export default function LoginAdmin({ onLogin, onNavigate }) {
 
           <div className="form-group">
             <label htmlFor="password">Senha:</label>
-            <input
-              type="password"
-              id="password"
-              name="password"
-              value={formData.password}
-              onChange={handleChange}
-              required
-            />
+            <div style={{ position: "relative" }}>
+              <input
+                type={showPassword ? "text" : "password"}
+                id="password"
+                name="password"
+                value={formData.password}
+                onChange={handleChange}
+                required
+              />
+              <button
+                type="button"
+                onClick={() => setShowPassword(!showPassword)}
+                style={{
+                  position: "absolute",
+                  right: "10px",
+                  top: "50%",
+                  transform: "translateY(-50%)",
+                  background: "none",
+                  border: "none",
+                  cursor: "pointer",
+                }}
+              >
+                {showPassword ? "Esconder" : "Mostrar"}
+              </button>
+            </div>
           </div>
 
           <div style={{ marginBottom: "30px" }}>

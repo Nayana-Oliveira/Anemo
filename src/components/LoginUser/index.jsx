@@ -3,29 +3,32 @@
 import { useState } from "react"
 import "./index.css"
 import axios from "axios"
+import { toast } from 'react-toastify';
 
 export default function LoginUser({ onLogin, onNavigate }) {
   const [formData, setFormData] = useState({
     email: "",
     password: "",
   })
+  const [showPassword, setShowPassword] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       const response = await axios.get(`http://localhost:5010/users?email=${formData.email}&password=${formData.password}`);
-      const users = response.data; 
+      const users = response.data;
 
       if (users.length > 0) {
         const loggedInUser = { ...users[0], type: "user" };
         onLogin(loggedInUser);
+        toast.success("Login bem-sucedido!");
         onNavigate("user-dashboard");
       } else {
-        alert("E-mail ou senha inválidos!");
+        toast.error("E-mail ou senha inválidos!");
       }
     } catch (error) {
       console.error('Erro ao fazer login:', error);
-      alert("Erro ao fazer login. Tente novamente.");
+      toast.error("Erro ao fazer login. Tente novamente.");
     }
   };
 
@@ -60,15 +63,33 @@ export default function LoginUser({ onLogin, onNavigate }) {
 
           <div className="form-group">
             <label htmlFor="password">Senha:</label>
-            <input
-              type="password"
-              id="password"
-              name="password"
-              value={formData.password}
-              onChange={handleChange}
-              required
-            />
+            <div style={{ position: "relative" }}>
+              <input
+                type={showPassword ? "text" : "password"}
+                id="password"
+                name="password"
+                value={formData.password}
+                onChange={handleChange}
+                required
+              />
+              <button
+                type="button"
+                onClick={() => setShowPassword(!showPassword)}
+                style={{
+                  position: "absolute",
+                  right: "10px",
+                  top: "50%",
+                  transform: "translateY(-50%)",
+                  background: "none",
+                  border: "none",
+                  cursor: "pointer",
+                }}
+              >
+                {showPassword ? "Esconder" : "Mostrar"}
+              </button>
+            </div>
           </div>
+
 
           <div style={{ marginBottom: "30px" }}>
             <a href="#" style={{ color: "#666", fontSize: "14px", textDecoration: "underline" }}>
@@ -105,9 +126,6 @@ export default function LoginUser({ onLogin, onNavigate }) {
           </div>
 
           <div className="social-login">
-            <button type="button" className="social-btn">
-              <img src="/assets/facebook.png" alt="Facebook" />
-            </button>
             <button type="button" className="social-btn">
               <img src="/assets/google.svg" alt="Google" />
             </button>

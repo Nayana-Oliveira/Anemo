@@ -2,6 +2,7 @@
 
 import { useState } from "react"
 import "./index.css"
+import { toast } from 'react-toastify';
 
 export default function RegisterAdmin({ onNavigate }) {
   const [formData, setFormData] = useState({
@@ -14,11 +15,14 @@ export default function RegisterAdmin({ onNavigate }) {
     password: "",
     confirmPassword: "",
   })
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+
 
   const handleSubmit = async (e) => {
     e.preventDefault()
     if (formData.password !== formData.confirmPassword) {
-      alert("As senhas não correspondem!");
+      toast.error("As senhas não correspondem!");
       return;
     }
 
@@ -32,11 +36,11 @@ export default function RegisterAdmin({ onNavigate }) {
         },
         body: JSON.stringify(adminData),
       });
-      alert("Cadastro de administrador realizado com sucesso!")
+      toast.success("Cadastro de administrador realizado com sucesso!")
       onNavigate("login-admin")
     } catch (error) {
       console.error('Erro ao cadastrar administrador:', error);
-      alert("Erro ao cadastrar administrador. Tente novamente.");
+      toast.error("Erro ao cadastrar administrador. Tente novamente.");
     }
   }
 
@@ -116,26 +120,60 @@ export default function RegisterAdmin({ onNavigate }) {
 
           <div className="form-group">
             <label htmlFor="password">Senha de acesso:</label>
-            <input
-              type="password"
-              id="password"
-              name="password"
-              value={formData.password}
-              onChange={handleChange}
-              required
-            />
+            <div style={{ position: "relative" }}>
+              <input
+                type={showPassword ? "text" : "password"}
+                id="password"
+                name="password"
+                value={formData.password}
+                onChange={handleChange}
+                required
+              />
+              <button
+                type="button"
+                onClick={() => setShowPassword(!showPassword)}
+                style={{
+                  position: "absolute",
+                  right: "10px",
+                  top: "50%",
+                  transform: "translateY(-50%)",
+                  background: "none",
+                  border: "none",
+                  cursor: "pointer",
+                }}
+              >
+                {showPassword ? "Esconder" : "Mostrar"}
+              </button>
+            </div>
           </div>
 
           <div className="form-group">
             <label htmlFor="confirmPassword">Digite novamente:</label>
-            <input
-              type="password"
-              id="confirmPassword"
-              name="confirmPassword"
-              value={formData.confirmPassword}
-              onChange={handleChange}
-              required
-            />
+            <div style={{ position: "relative" }}>
+              <input
+                type={showConfirmPassword ? "text" : "password"}
+                id="confirmPassword"
+                name="confirmPassword"
+                value={formData.confirmPassword}
+                onChange={handleChange}
+                required
+              />
+              <button
+                type="button"
+                onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                style={{
+                  position: "absolute",
+                  right: "10px",
+                  top: "50%",
+                  transform: "translateY(-50%)",
+                  background: "none",
+                  border: "none",
+                  cursor: "pointer",
+                }}
+              >
+                {showConfirmPassword ? "Esconder" : "Mostrar"}
+              </button>
+            </div>
           </div>
 
           <div style={{ textAlign: "center", marginTop: "40px" }}>

@@ -2,6 +2,7 @@
 
 import { useState } from "react"
 import "./index.css"
+import { toast } from 'react-toastify';
 
 export default function RegisterUser({ onNavigate }) {
   const [formData, setFormData] = useState({
@@ -14,11 +15,13 @@ export default function RegisterUser({ onNavigate }) {
     password: "",
     confirmPassword: "",
   })
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (formData.password !== formData.confirmPassword) {
-      alert("As senhas não correspondem!");
+      toast.error("As senhas não correspondem!");
       return;
     }
 
@@ -32,11 +35,11 @@ export default function RegisterUser({ onNavigate }) {
         },
         body: JSON.stringify(userData),
       });
-      alert("Cadastro realizado com sucesso!");
+      toast.success("Cadastro realizado com sucesso!");
       onNavigate("login-user");
     } catch (error) {
       console.error('Erro ao cadastrar usuário:', error);
-      alert("Erro ao cadastrar usuário. Tente novamente.");
+      toast.error("Erro ao cadastrar usuário. Tente novamente.");
     }
   }
 
@@ -113,27 +116,62 @@ export default function RegisterUser({ onNavigate }) {
 
           <div className="form-group">
             <label htmlFor="password">Senha de acesso:</label>
-            <input
-              type="password"
-              id="password"
-              name="password"
-              value={formData.password}
-              onChange={handleChange}
-              required
-            />
+            <div style={{ position: "relative" }}>
+              <input
+                type={showPassword ? "text" : "password"}
+                id="password"
+                name="password"
+                value={formData.password}
+                onChange={handleChange}
+                required
+              />
+              <button
+                type="button"
+                onClick={() => setShowPassword(!showPassword)}
+                style={{
+                  position: "absolute",
+                  right: "10px",
+                  top: "50%",
+                  transform: "translateY(-50%)",
+                  background: "none",
+                  border: "none",
+                  cursor: "pointer",
+                }}
+              >
+                {showPassword ? "Esconder" : "Mostrar"}
+              </button>
+            </div>
           </div>
 
           <div className="form-group">
             <label htmlFor="confirmPassword">Digite novamente:</label>
-            <input
-              type="password"
-              id="confirmPassword"
-              name="confirmPassword"
-              value={formData.confirmPassword}
-              onChange={handleChange}
-              required
-            />
+            <div style={{ position: "relative" }}>
+              <input
+                type={showConfirmPassword ? "text" : "password"}
+                id="confirmPassword"
+                name="confirmPassword"
+                value={formData.confirmPassword}
+                onChange={handleChange}
+                required
+              />
+              <button
+                type="button"
+                onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                style={{
+                  position: "absolute",
+                  right: "10px",
+                  top: "50%",
+                  transform: "translateY(-50%)",
+                  background: "none",
+                  border: "none",
+                  cursor: "pointer",
+                }}
+              >
+                {showConfirmPassword ? "Esconder" : "Mostrar"}
+              </button>
+            </div>
           </div>
+
 
           <div style={{ marginBottom: "30px", textAlign: "center" }}>
             <p style={{ color: "#666", fontSize: "14px" }}>
@@ -171,9 +209,6 @@ export default function RegisterUser({ onNavigate }) {
           </div>
 
           <div className="social-login">
-            <button type="button" className="social-btn facebook">
-              <img src="/assets/facebook.png" alt="" />
-            </button>
             <button type="button" className="social-btn google">
               <img src="/assets/google.svg" alt="" />
             </button>

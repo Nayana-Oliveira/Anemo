@@ -41,7 +41,7 @@ body {
 
 .category-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr); 
+  grid-template-columns: repeat(4, 1fr); 
   gap: 30px;
   margin-bottom: 60px;
 }
@@ -104,6 +104,10 @@ body {
   cursor: pointer;
   display: flex; 
   flex-direction: column; 
+}
+
+.product-info {
+  flex-grow: 1;
 }
 
 .product-card:hover {

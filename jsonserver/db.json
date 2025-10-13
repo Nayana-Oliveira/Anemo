@@ -8,7 +8,10 @@
       "quantity": "2",
       "size": "pequeno",
       "description": "A Tostão Rosa, também conhecida como dinheiro-em-penca, é uma planta encantadora que chama atenção por suas pequenas folhas arredondadas em tons de verde e rosa delicado. Apesar de parecer frágil, ela é bastante resistente quando recebe os cuidados adequados. Para manter suas cores vivas e a folhagem saudável, é importante que receba pelo menos 2 horas diárias de sol.\nSuas folhas crescem de forma pendente, formando uma linda cascata natural que se espalha pelas bordas dos vasos, tornando-a perfeita para vasos suspensos ou como forração. A textura delicada e o contraste das cores dão um toque especial e hipnotizante à decoração.\nMuito procurada por quem deseja um visual alegre e moderno, a Tostão Rosa é uma das plantas mais populares da nossa loja. Confira nossos artigos com dicas de cultivo para manter sua planta sempre bonita e cheia de vida.",
-      "image": "/products/Tostao-rosa.png"
+      "image": "/products/Tostao-rosa.png",
+      "images": [
+        "/products/Tostao-rosa.png"
+      ]
     },
     {
       "id": "a670",
@@ -83,7 +86,7 @@
       "id": "75d0",
       "productName": "Buquê com 12 Rosas Vermelhas",
       "productId": "7",
-      "category": "ppara-presentear",
+      "category": "para-presentear",
       "price": "80.00",
       "quantity": "10",
       "size": "medio",
@@ -170,8 +173,8 @@
       "fullName": "teste",
       "birthDate": "2002-01-01",
       "cpf": "55771307866",
-      "phone": "123456789",
-      "mobile": "",
+      "phone": "1122223333",
+      "mobile": "11999998888",
       "email": "teste@anemo.com",
       "password": "senha123",
       "addresses": [
@@ -184,7 +187,8 @@
           "state": "SP",
           "zipCode": "04696-000"
         }
-      ]
+      ],
+      "type": "user"
     }
   ],
   "admins": [
@@ -196,7 +200,19 @@
       "phone": "1122223333",
       "mobile": "11999998888",
       "email": "admin@anemo.com",
-      "password": "senhaforte123"
+      "password": "senhaforte123",
+      "type": "admin",
+      "addresses": [
+        {
+          "id": "addr1760364236418",
+          "street": "asdas",
+          "number": "123",
+          "neighborhood": "123",
+          "city": "A",
+          "state": "D",
+          "zipCode": "213"
+        }
+      ]
     }
   ]
 }

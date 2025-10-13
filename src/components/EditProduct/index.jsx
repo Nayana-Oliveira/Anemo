@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import axios from 'axios';
 import "./index.css";
+import { toast } from 'react-toastify';
 
 export default function EditProduct({ product, onNavigate }) {
   const [formData, setFormData] = useState(product || {});
@@ -66,11 +67,11 @@ export default function EditProduct({ product, onNavigate }) {
 
     try {
       await axios.put(`http://localhost:5010/products/${product.id}`, finalProductData);
-      alert("Produto atualizado com sucesso!");
+      toast.success("Produto atualizado com sucesso!");
       onNavigate("admin-dashboard");
     } catch (error) {
       console.error('Erro ao atualizar produto:', error);
-      alert("Erro ao atualizar o produto. Tente novamente.");
+      toast.error("Erro ao atualizar o produto. Tente novamente.");
     }
   };
 

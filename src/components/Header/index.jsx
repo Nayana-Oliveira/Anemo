@@ -1,7 +1,21 @@
 "use client"
+import { useState } from "react";
 import "./index.css"
+import { FaSearch } from 'react-icons/fa';
 
-export default function Header({ onNavigate, user }) {
+export default function Header({ onNavigate, user, onSearch }) {
+  const [searchTerm, setSearchTerm] = useState("");
+
+  const handleSearchChange = (e) => {
+    setSearchTerm(e.target.value);
+  };
+
+  const handleSearchSubmit = (e) => {
+    e.preventDefault();
+    onSearch(searchTerm);
+    setSearchTerm("");
+  };
+
   return (
     <header className="header">
       <div className="container">
@@ -17,6 +31,18 @@ export default function Header({ onNavigate, user }) {
             <img src="/assets/anemo_logo.png" alt="Anêmo Logo" className="logo-icon-img" />
             Anêmo
           </a>
+
+          <form onSubmit={handleSearchSubmit} className="search-bar">
+            <input
+              type="text"
+              placeholder="Buscar produtos..."
+              value={searchTerm}
+              onChange={handleSearchChange}
+            />
+            <button type="submit">
+              <FaSearch />
+            </button>
+          </form>
 
           <div style={{ display: "flex", alignItems: "center", gap: "20px" }}>
             <div

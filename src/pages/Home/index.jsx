@@ -27,7 +27,7 @@ export default function HomePage({ onNavigate, onProductSelect, onCategorySelect
     { name: "Para Presentear", icon: "/assets/presentear.png", id: "para-presentear" },
     { name: "Plantas Grandes", icon: "/assets/plantasGrandes.png", id: "plantas-grandes" },
     { name: "Vasos", icon: "/assets/vasos.png", id: "vasos" },
-    { name: "Todas as plantas", icon: "/assets/flor.jpg", id: ""}
+    { name: "Todas as plantas", icon: "/products/flor.jpg", id: ""}
   ];
 
   const bottomCategories = [
@@ -63,9 +63,11 @@ export default function HomePage({ onNavigate, onProductSelect, onCategorySelect
             {topProducts.map((product) => (
               <div key={product.id} className="product-card" >
                 <img src={product.image || "/assets/placeholder.svg"} alt={product.productName} className="product-image" onClick={() => onProductSelect(product)} />
-                <div className="product-name">{product.productName}</div>
-                <div className="product-price">R$ {parseFloat(product.price).toFixed(2)}</div>
-                <div className="product-installments">ou em até 4x R$ {(parseFloat(product.price) / 4).toFixed(2)}</div>
+                <div className="product-info">
+                  <div className="product-name">{product.productName}</div>
+                  <div className="product-price">R$ {parseFloat(product.price).toFixed(2)}</div>
+                  <div className="product-installments">ou em até 4x R$ {(parseFloat(product.price) / 4).toFixed(2)}</div>
+                </div>
                 <button className="btn btn-primary" onClick={() => onProductSelect(product)}>Comprar</button>
               </div>
             ))}
@@ -96,9 +98,11 @@ export default function HomePage({ onNavigate, onProductSelect, onCategorySelect
             {bottomProducts.map((product) => (
               <div key={product.id} className="product-card" >
                 <img src={product.image || "/assets/placeholder.svg"} alt={product.productName} className="product-image" onClick={() => onProductSelect(product)} />
-                <div className="product-name">{product.productName}</div>
-                <div className="product-price">R$ {parseFloat(product.price).toFixed(2)}</div>
-                <div className="product-installments">ou em até 4x R$ {(parseFloat(product.price) / 4).toFixed(2)}</div>
+                <div className="product-info">
+                  <div className="product-name">{product.productName}</div>
+                  <div className="product-price">R$ {parseFloat(product.price).toFixed(2)}</div>
+                  <div className="product-installments">ou em até 4x R$ {(parseFloat(product.price) / 4).toFixed(2)}</div>
+                </div>
                 <button className="btn btn-primary" onClick={() => onProductSelect(product)}>Comprar</button>
               </div>
             ))}

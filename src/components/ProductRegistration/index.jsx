@@ -3,6 +3,8 @@
 import { useState } from "react";
 import axios from 'axios';
 import "./index.css";
+import { toast } from 'react-toastify';
+
 
 export default function ProductRegistration({ onNavigate }) {
   const [formData, setFormData] = useState({
@@ -22,7 +24,7 @@ export default function ProductRegistration({ onNavigate }) {
     e.preventDefault();
 
     if (imageFiles.length === 0) {
-      alert("Por favor, selecione pelo menos uma imagem para o produto.");
+      toast.error("Por favor, selecione pelo menos uma imagem para o produto.");
       return;
     }
 
@@ -35,11 +37,11 @@ export default function ProductRegistration({ onNavigate }) {
     try {
       await axios.post('http://localhost:5010/products', finalProductData);
       
-      alert("Produto cadastrado com sucesso!");
+      toast.success("Produto cadastrado com sucesso!");
       onNavigate("admin-dashboard");
     } catch (error) {
       console.error('Erro ao cadastrar produto:', error);
-      alert("Erro ao cadastrar produto. Tente novamente.");
+      toast.error("Erro ao cadastrar produto. Tente novamente.");
     }
   };
 

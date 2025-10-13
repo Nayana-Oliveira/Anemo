@@ -2,21 +2,35 @@
 
 import { useState, useEffect } from "react";
 import axios from 'axios';
+import { toast } from 'react-toastify';
+import { FaTrash } from 'react-icons/fa';
 import "./index.css";
+
+const emptyAddress = {
+  id: null, street: '', number: '', neighborhood: '', city: '', state: '', zipCode: ''
+};
 
 export default function UserDashboard({ user, onNavigate, onUpdateUser }) {
   const [activeSection, setActiveSection] = useState("account");
   const [formData, setFormData] = useState(user || {});
+  
+  const [selectedAddress, setSelectedAddress] = useState(null);
+  const [isAddingAddress, setIsAddingAddress] = useState(false);
+  const [addressFormData, setAddressFormData] = useState(emptyAddress);
 
   useEffect(() => {
     setFormData(user || {});
   }, [user]);
 
+  useEffect(() => {
+    if (selectedAddress) {
+      setAddressFormData(selectedAddress);
+      setIsAddingAddress(false);
+    }
+  }, [selectedAddress]);
+
   const handleDataChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
-    });
+    setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
   const handleDataSubmit = async (e) => {
@@ -24,12 +38,73 @@ export default function UserDashboard({ user, onNavigate, onUpdateUser }) {
     try {
       const response = await axios.put(`http://localhost:5010/users/${user.id}`, formData);
       onUpdateUser(response.data);
-      alert("Dados atualizados com sucesso!");
+      toast.success("Dados atualizados com sucesso!");
       setActiveSection("account");
     } catch (error) {
       console.error("Erro ao atualizar dados:", error);
-      alert("Não foi possível atualizar os dados. Tente novamente.");
+      toast.error("Não foi possível atualizar os dados.");
     }
+  };
+
+  const handleAddressChange = (e) => {
+    const { name, value } = e.target;
+    setAddressFormData(prev => ({ ...prev, [name]: value }));
+  };
+
+  const handleAddressSubmit = async (e) => {
+    e.preventDefault();
+    const isEditing = !!selectedAddress;
+    let updatedAddresses;
+
+    if (isEditing) {
+      updatedAddresses = user.addresses.map(addr => addr.id === addressFormData.id ? addressFormData : addr);
+    } else {
+      const newAddress = { ...addressFormData, id: `addr${Date.now()}` };
+      updatedAddresses = [...(user.addresses || []), newAddress];
+    }
+
+    const updatedUser = { ...user, addresses: updatedAddresses };
+
+    try {
+      const response = await axios.put(`http://localhost:5010/users/${user.id}`, updatedUser);
+      onUpdateUser(response.data);
+      toast.success(`Endereço ${isEditing ? 'atualizado' : 'salvo'} com sucesso!`);
+      setSelectedAddress(null);
+      setIsAddingAddress(false);
+    } catch (error) {
+      console.error("Erro ao salvar endereço:", error);
+      toast.error("Erro ao salvar endereço.");
+    }
+  };
+
+  const handleAddressDelete = async (addressId) => {
+    if (window.confirm("Tem certeza que deseja excluir este endereço?")) {
+      const updatedAddresses = user.addresses.filter(addr => addr.id !== addressId);
+      const updatedUser = { ...user, addresses: updatedAddresses };
+
+      try {
+        const response = await axios.put(`http://localhost:5010/users/${user.id}`, updatedUser);
+        onUpdateUser(response.data);
+        toast.success("Endereço excluído com sucesso!");
+        if (selectedAddress?.id === addressId) {
+          setSelectedAddress(null);
+        }
+      } catch (error) {
+        console.error("Erro ao excluir endereço:", error);
+        toast.error("Erro ao excluir endereço.");
+      }
+    }
+  };
+  
+  const handleAddNewAddress = () => {
+    setSelectedAddress(null);
+    setAddressFormData(emptyAddress);
+    setIsAddingAddress(true);
+  };
+
+  const handleCancelAddress = () => {
+    setSelectedAddress(null);
+    setIsAddingAddress(false);
   };
 
   const calculateProfileCompletion = () => {
@@ -38,7 +113,6 @@ export default function UserDashboard({ user, onNavigate, onUpdateUser }) {
     const filledFields = fields.filter(field => user[field] && user[field].trim() !== '');
     return Math.round((filledFields.length / fields.length) * 100);
   };
-
   const completionPercentage = calculateProfileCompletion();
 
   const menuItems = [
@@ -67,123 +141,122 @@ export default function UserDashboard({ user, onNavigate, onUpdateUser }) {
               <div>
                 <p><strong>Nome:</strong> {user?.fullName || 'Não informado'}</p>
                 <p><strong>E-mail:</strong> {user?.email || 'Não informado'}</p>
-                 <button className="edit-btn" onClick={() => setActiveSection("data")}>
-                    Editar meus dados
-                 </button>
+                <button className="edit-btn" onClick={() => setActiveSection("data")}>
+                  Editar meus dados
+                </button>
               </div>
               <div className="progress-section">
-                <div 
-                  className="progress-circle" 
-                  style={{ background: `conic-gradient(#477556 0deg ${completionPercentage * 3.6}deg, #e0e0e0 ${completionPercentage * 3.6}deg 360deg)` }}
-                >
+                <div className="progress-circle" style={{ background: `conic-gradient(#477556 ${completionPercentage * 3.6}deg, #e0e0e0 0deg)` }}>
                   <div className="progress-inner">
                     <span className="progress-percentage">{completionPercentage}%</span>
                   </div>
                 </div>
                 <div className="progress-label">
                   <p>Dados completos</p>
-                   {completionPercentage < 100 && (
-                     <a href="#" className="complete-now-link" onClick={() => setActiveSection("data")}>Completar agora</a>
+                  {completionPercentage < 100 && (
+                    <a href="#" className="complete-now-link" onClick={() => setActiveSection("data")}>Completar agora</a>
                   )}
                 </div>
               </div>
             </div>
           </div>
         );
-
       case "data":
         return (
           <div className="content-section">
             <h2>Meus Dados Pessoais</h2>
             <form onSubmit={handleDataSubmit}>
-              <div className="form-group">
-                <label>Nome completo:</label>
-                <input type="text" name="fullName" value={formData.fullName || ''} onChange={handleDataChange} />
+              <div className="form-group"><label>Nome completo:</label><input type="text" name="fullName" value={formData.fullName || ''} onChange={handleDataChange} /></div>
+              <div className="form-grid-2">
+                <div className="form-group"><label>Data de nascimento:</label><input type="date" name="birthDate" value={formData.birthDate || ''} onChange={handleDataChange} /></div>
+                <div className="form-group"><label>CPF:</label><input type="text" name="cpf" value={formData.cpf || ''} onChange={handleDataChange} /></div>
               </div>
               <div className="form-grid-2">
-                <div className="form-group">
-                  <label>Data de nascimento:</label>
-                  <input type="date" name="birthDate" value={formData.birthDate || ''} onChange={handleDataChange} />
-                </div>
-                <div className="form-group">
-                  <label>CPF:</label>
-                  <input type="text" name="cpf" value={formData.cpf || ''} onChange={handleDataChange} />
-                </div>
+                <div className="form-group"><label>Telefone:</label><input type="tel" name="phone" value={formData.phone || ''} onChange={handleDataChange} /></div>
+                <div className="form-group"><label>Celular:</label><input type="tel" name="mobile" value={formData.mobile || ''} onChange={handleDataChange} /></div>
               </div>
-              <div className="form-grid-2">
-                <div className="form-group">
-                  <label>Telefone:</label>
-                  <input type="tel" name="phone" value={formData.phone || ''} onChange={handleDataChange} />
-                </div>
-                <div className="form-group">
-                  <label>Celular:</label>
-                  <input type="tel" name="mobile" value={formData.mobile || ''} onChange={handleDataChange} />
-                </div>
-              </div>
-              <div className="form-group">
-                <label>E-mail:</label>
-                <input type="email" name="email" value={formData.email || ''} onChange={handleDataChange} />
-              </div>
-              <div style={{ textAlign: "right", marginTop: "20px" }}>
-                <button type="submit" className="btn btn-primary">Salvar Alterações</button>
-              </div>
+              <div className="form-group"><label>E-mail:</label><input type="email" name="email" value={formData.email || ''} onChange={handleDataChange} /></div>
+              <div style={{ textAlign: "right", marginTop: "20px" }}><button type="submit" className="btn btn-primary">Salvar Alterações</button></div>
             </form>
           </div>
         );
-
       case "addresses":
         return (
-          <div className="content-section">
-            <h2>Meus Endereços</h2>
-            {user?.addresses && user.addresses.length > 0 ? user.addresses.map(addr => (
-              <div key={addr.id} className="address-card">
-                <div>
-                  <p><strong>{addr.street}, {addr.number}</strong></p>
-                  <p>{addr.neighborhood} - {addr.city}, {addr.state} | CEP: {addr.zipCode}</p>
-                </div>
-                <button className="btn-edit-address">Editar</button>
+          <div className={`address-page-layout ${isAddingAddress || selectedAddress ? 'two-columns' : ''}`}>
+            <div className="address-list-container">
+              <div className="address-header">
+                <h3>Seus Endereços</h3>
+                <button className="btn btn-primary btn-sm" onClick={handleAddNewAddress}>Adicionar Novo</button>
               </div>
-            )) : (
-              <div className="empty-state">
+              {user?.addresses && user.addresses.length > 0 ? (
+                <div className="address-list">
+                  {user.addresses.map(addr => (
+                    <div key={addr.id} className={`address-list-item ${selectedAddress?.id === addr.id ? 'active' : ''}`}>
+                      <div className="address-info" onClick={() => setSelectedAddress(addr)}>
+                        <p><strong>{addr.street}, {addr.number}</strong></p>
+                        <p>{addr.city}, {addr.state}</p>
+                      </div>
+                      <div className="address-item-actions">
+                         <button className="btn-edit-address" onClick={() => setSelectedAddress(addr)}>Editar</button>
+                         <button className="btn-delete-address" onClick={() => handleAddressDelete(addr.id)}><FaTrash /></button>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              ) : (
                 <p>Nenhum endereço cadastrado.</p>
+              )}
+            </div>
+            {(isAddingAddress || selectedAddress) && (
+              <div className="address-form-container">
+                <h3>{isAddingAddress ? 'Adicionar Novo Endereço' : 'Editar Endereço'}</h3>
+                <form onSubmit={handleAddressSubmit}>
+                  <div className="form-group"><label>Rua:</label><input type="text" name="street" value={addressFormData.street} onChange={handleAddressChange} required /></div>
+                  <div className="form-grid-2">
+                    <div className="form-group"><label>Número:</label><input type="text" name="number" value={addressFormData.number} onChange={handleAddressChange} required /></div>
+                    <div className="form-group"><label>CEP:</label><input type="text" name="zipCode" value={addressFormData.zipCode} onChange={handleAddressChange} required /></div>
+                  </div>
+                  <div className="form-group"><label>Bairro:</label><input type="text" name="neighborhood" value={addressFormData.neighborhood} onChange={handleAddressChange} required /></div>
+                  <div className="form-grid-2">
+                    <div className="form-group"><label>Cidade:</label><input type="text" name="city" value={addressFormData.city} onChange={handleAddressChange} required /></div>
+                    <div className="form-group"><label>Estado:</label><input type="text" name="state" value={addressFormData.state} onChange={handleAddressChange} required /></div>
+                  </div>
+                  <div className="form-actions">
+                    <button type="button" className="btn btn-secondary" onClick={handleCancelAddress}>Cancelar</button>
+                    <button type="submit" className="btn btn-primary">{isAddingAddress ? 'Salvar' : 'Atualizar'}</button>
+                  </div>
+                </form>
               </div>
             )}
-            <button className="btn btn-primary" style={{ marginTop: "20px" }}>Adicionar Endereço</button>
           </div>
         );
-
       case "orders":
         return (
           <div className="content-section">
             <h2>Meus Pedidos</h2>
-            <div className="empty-state">
-              <p>Você ainda não fez nenhum pedido.</p>
-            </div>
+            <div className="empty-state"><p>Você ainda não fez nenhum pedido.</p></div>
           </div>
         );
-
       default:
         return null;
     }
   };
 
   return (
-    <div className="dashboard-page">
-      <div className="dashboard-grid">
-        <div className="sidebar-menu">
-          {menuItems.map((item) => (
-            <div
-              key={item.id}
-              className={`menu-item ${activeSection === item.id ? "active" : ""}`}
-              onClick={() => handleMenuClick(item.id)}
-            >
-              <img src={item.icon} alt="" className="menu-icon-img" />
-              <span>{item.label}</span>
-            </div>
-          ))}
-        </div>
-        <div className="main-content">
-          {renderContent()}
+    <div style={{ backgroundColor: "#6b9b76", minHeight: "100vh" }}>
+      <div className="container" style={{ padding: "40px 0" }}>
+        <div className="dashboard-grid">
+          <div className="sidebar-menu">
+            {menuItems.map((item) => (
+              <div key={item.id} className={`menu-item ${activeSection === item.id ? "active" : ""}`} onClick={() => handleMenuClick(item.id)}>
+                <img src={item.icon} alt="" className="menu-icon-img" />
+                <span>{item.label}</span>
+              </div>
+            ))}
+          </div>
+          <div className="main-content">
+            {renderContent()}
+          </div>
         </div>
       </div>
     </div>

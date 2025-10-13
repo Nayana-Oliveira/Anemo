@@ -1,5 +1,7 @@
 "use client"
 import { useState } from "react"
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 import Header from "./components/Header"
 import Footer from "./components/Footer"
@@ -15,6 +17,7 @@ import ProductRegistration from "./components/ProductRegistration"
 import EditProduct from "./components/EditProduct"
 import CartPage from "./components/CartPage"
 import CategoryPage from "./pages/CategoryPage"
+import SearchResults from "./pages/SearchResults";
 import Erro from "./pages/Erro"
 
 export default function App() {
@@ -24,6 +27,7 @@ export default function App() {
   const [productToEdit, setProductToEdit] = useState(null);
   const [cartItem, setCartItem] = useState(null);
   const [selectedCategory, setSelectedCategory] = useState(null);
+  const [searchResults, setSearchResults] = useState([]);
 
   const handleNavigate = (page) => {
     setCurrentPage(page);
@@ -57,6 +61,26 @@ export default function App() {
     setCurrentPage("category");
   };
 
+  const handleSearch = async (searchTerm) => {
+    const term = searchTerm.trim();
+    if (term === "" || term === "/login") {
+      return;
+    }
+    try {
+      const response = await fetch(`http://localhost:5010/products`);
+      const allProducts = await response.json();
+      
+      const filteredResults = allProducts.filter(product =>
+        product.productName.toLowerCase().includes(term.toLowerCase())
+      );
+
+      setSearchResults(filteredResults);
+      setCurrentPage("search-results");
+    } catch (error) {
+      console.error("Erro ao buscar produtos:", error);
+    }
+  };
+
 
   const renderPage = () => {
     switch (currentPage) {
@@ -75,7 +99,7 @@ export default function App() {
       case "user-dashboard":
         return <UserDashboard onNavigate={handleNavigate} user={user} onUpdateUser={handleUpdateUser} />
       case "admin-dashboard":
-        return <AdminDashboard onNavigate={handleNavigate} user={user} onEditProduct={handleEditProduct} />
+        return <AdminDashboard onNavigate={handleNavigate} user={user} onEditProduct={handleEditProduct} onUpdateAdmin={handleUpdateUser} />
       case "product-registration":
         return <ProductRegistration onNavigate={handleNavigate} />
       case "edit-product":
@@ -84,8 +108,10 @@ export default function App() {
         return <CartPage onNavigate={handleNavigate} item={cartItem} />
       case "category":
         return <CategoryPage categoryId={selectedCategory} onProductSelect={handleProductSelect} onNavigate={handleNavigate} />
+      case "search-results":
+        return <SearchResults results={searchResults} onProductSelect={handleProductSelect} />;
       case "error":
-        return <ErrorPage onNavigate={handleNavigate} />;
+        return <Erro onNavigate={handleNavigate} />;
       default:
         return <HomePage onNavigate={handleNavigate} onProductSelect={handleProductSelect} onCategorySelect={handleCategorySelect} />
     }
@@ -95,9 +121,10 @@ export default function App() {
 
   return (
     <div className="app">
-      {showHeaderFooter && <Header onNavigate={handleNavigate} user={user} />}
+      {showHeaderFooter && <Header onNavigate={handleNavigate} user={user} onSearch={handleSearch} />}
       <main style={{ flex: 1 }}>{renderPage()}</main>
       {showHeaderFooter && <Footer />}
+      <ToastContainer />
     </div>
   )
 }

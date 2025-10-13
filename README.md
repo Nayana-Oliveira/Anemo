@@ -107,30 +107,6 @@ A estilização do projeto é centralizada no arquivo `src/index.css`, que cont�
 
 -----
 
-### Estrutura de Pastas
-
-O projeto segue uma estrutura organizada para separar responsabilidades:
-
-Anemo/
-├── public/
-│   └── assets/       # Imagens estáticas, ícones e logos
-├── src/
-│   ├── assets/       # Imagens que podem ser importadas como módulos
-│   ├── components/   # Componentes reutilizáveis (Header, Footer, etc.)
-│   │   ├── AdmDashboard/
-│   │   ├── Footer/
-│   │   ├── ...
-│   ├── pages/        # Componentes que representam páginas inteiras
-│   │   └── Home/
-│   ├── App.jsx       # Componente principal que gerencia a navegação
-│   ├── index.css     # Estilos globais e variáveis de cores
-│   └── main.jsx      # Ponto de entrada da aplicação React
-├── .gitignore
-├── index.html
-├── package.json
-└── README.md
-```
-
 ###  Desenvolvedoras
 
 Este projeto foi desenvolvido com dedicação por:

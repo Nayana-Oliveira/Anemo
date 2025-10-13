@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import './index.css';
 import '../../pages/Home/index.css'; 
+import '../../pages/Home/index.css';
 
 export default function CategoryPage({ categoryId, onProductSelect, onNavigate }) {
   const [products, setProducts] = useState([]);
@@ -20,13 +21,34 @@ export default function CategoryPage({ categoryId, onProductSelect, onNavigate }
       };
       fetchCategoryProducts();
     }
+    const fetchCategoryProducts = async () => {
+      try {
+        let url = 'http://localhost:5010/products';
+        if (categoryId && categoryId !== 'todas-as-plantas') {
+          url = `http://localhost:5010/products?category=${categoryId}`;
+        }
+
+        const response = await fetch(url);
+        const data = await response.json();
+        setProducts(data);
+
+        if (categoryId === 'todas-as-plantas') {
+          setCategoryName('Todas as Plantas');
+        } else {
+          setCategoryName(categoryId.replace(/-/g, ' '));
+        }
+      } catch (error) {
+        console.error("Erro ao buscar produtos da categoria:", error);
+      }
+    };
+
+    fetchCategoryProducts();
   }, [categoryId]);
 
   return (
     <div className="category-page">
       <div className="container">
         <h1 className="category-title">{categoryName}</h1>
-        
         {products.length > 0 ? (
           <div className="product-grid">
             {products.map((product) => (

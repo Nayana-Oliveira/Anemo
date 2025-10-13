@@ -5,13 +5,16 @@ import axios from "axios";
 "use client";
 
 export default function HomePage({ onNavigate, onProductSelect, onCategorySelect }) {
-  const [products, setProducts] = useState([]);
+  const [topProducts, setTopProducts] = useState([]);
+  const [bottomProducts, setBottomProducts] = useState([]);
 
   useEffect(() => {
     const fetchProducts = async () => {
       try {
         const response = await axios.get('http://localhost:5010/products');
-        setProducts(response.data); 
+        const allProducts = response.data;
+        setTopProducts(allProducts.slice(0, 6)); 
+        setBottomProducts(allProducts.slice(6, 12)); 
       } catch (error) {
         console.error('Erro ao buscar produtos:', error);
       }
@@ -24,6 +27,7 @@ export default function HomePage({ onNavigate, onProductSelect, onCategorySelect
     { name: "Para Presentear", icon: "/assets/presentear.png", id: "para-presentear" },
     { name: "Plantas Grandes", icon: "/assets/plantasGrandes.png", id: "plantas-grandes" },
     { name: "Vasos", icon: "/assets/vasos.png", id: "vasos" },
+    { name: "Todas as plantas", icon: "/assets/flor.jpg", id: ""}
   ];
 
   const bottomCategories = [
@@ -31,7 +35,7 @@ export default function HomePage({ onNavigate, onProductSelect, onCategorySelect
     { name: "Flores Comestíveis", icon: "/assets/comestiveis.png", id: "flores-comestiveis" },
     { name: "Flores", icon: "/assets/flores.png", id: "flores" }
   ];
-  
+
   return (
     <div className="home-page">
       <section className="hero-banner">
@@ -56,12 +60,12 @@ export default function HomePage({ onNavigate, onProductSelect, onCategorySelect
         <div className="container">
           <h2 style={{textAlign: 'center', fontSize: '28px', marginBottom: '40px'}}>Nossos Produtos</h2>
           <div className="product-grid">
-            {products.map((product) => ( 
+            {topProducts.map((product) => (
               <div key={product.id} className="product-card" >
                 <img src={product.image || "/assets/placeholder.svg"} alt={product.productName} className="product-image" onClick={() => onProductSelect(product)} />
                 <div className="product-name">{product.productName}</div>
                 <div className="product-price">R$ {parseFloat(product.price).toFixed(2)}</div>
-                <div className="product-installments">ou em até 4x R$ {(product.price / 4).toFixed(2)}</div>
+                <div className="product-installments">ou em até 4x R$ {(parseFloat(product.price) / 4).toFixed(2)}</div>
                 <button className="btn btn-primary" onClick={() => onProductSelect(product)}>Comprar</button>
               </div>
             ))}
@@ -80,6 +84,22 @@ export default function HomePage({ onNavigate, onProductSelect, onCategorySelect
                   <img src={category.icon} alt={category.name} className="category-icon" />
                 </div>
                 <div className="category-label">{category.name}</div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="products-section">
+        <div className="container">
+          <div className="product-grid">
+            {bottomProducts.map((product) => (
+              <div key={product.id} className="product-card" >
+                <img src={product.image || "/assets/placeholder.svg"} alt={product.productName} className="product-image" onClick={() => onProductSelect(product)} />
+                <div className="product-name">{product.productName}</div>
+                <div className="product-price">R$ {parseFloat(product.price).toFixed(2)}</div>
+                <div className="product-installments">ou em até 4x R$ {(parseFloat(product.price) / 4).toFixed(2)}</div>
+                <button className="btn btn-primary" onClick={() => onProductSelect(product)}>Comprar</button>
               </div>
             ))}
           </div>

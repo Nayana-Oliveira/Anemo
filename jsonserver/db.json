@@ -78,6 +78,90 @@
       "images": [
         "/products/Buqu_de_Flores_A_noite_estrelada_Van_Gogh_4.png"
       ]
+    },
+    {
+      "id": "75d0",
+      "productName": "Buquê com 12 Rosas Vermelhas",
+      "productId": "7",
+      "category": "ppara-presentear",
+      "price": "80.00",
+      "quantity": "10",
+      "size": "medio",
+      "description": "Buquê apaixonante com rosas vermelhas e delicada gipsofila. Presente perfeito para expressar amor, carinho e sofisticação",
+      "image": "/products/400_28625.jpg",
+      "images": [
+        "/products/400_28625.jpg"
+      ]
+    },
+    {
+      "id": "f381",
+      "productName": " Cactus Mandacaru Grande",
+      "productId": "8",
+      "category": "plantas-grandes",
+      "price": "450.00",
+      "quantity": "20",
+      "size": "grande",
+      "description": "O Cactus Mandacaru (Cereus jamacaru) é um cacto colunar que pode crescer até 6 metros de altura. Tem espinhos ao longo das costelas e produz flores brancas noturnas e frutos comestíveis. Ideal para jardins secos, tolera pleno sol e pouca água.",
+      "image": "/products/CactusMandacaru1_420x.png",
+      "images": [
+        "/products/CactusMandacaru1_420x.png"
+      ]
+    },
+    {
+      "id": "d5b4",
+      "productName": "Vaso Para Planta Cachepot Decorativo de Mesa 16x11cm",
+      "productId": "9",
+      "category": "vasos",
+      "price": "16.00",
+      "quantity": "10",
+      "size": "medio",
+      "description": "Dê um toque moderno e elegante à sua decoração com o Vaso Cachepot Decorativo de Mesa 16x11cm – Linha Okla. Com design minimalista e textura listrada diferenciada, ele é perfeito para compor ambientes sofisticados e aconchegantes, seja em mesas, prateleiras, aparadores ou escritórios.\n\nProduzido em polipropileno de alta qualidade, o vaso é leve, resistente e durável, ideal para o dia a dia. Além disso, suas cores modernas permitem combinações versáteis com diferentes estilos de decoração e plantas.",
+      "image": "/products/download.jpg",
+      "images": [
+        "/products/downloaproductsd.jpg"
+      ]
+    },
+    {
+      "id": "a342",
+      "productName": "Kit Sementes de Alyssum Flor de Mel Amarelo e Violeta Isla",
+      "productId": "10",
+      "category": "sementes",
+      "price": "25.00",
+      "quantity": "20",
+      "size": "pequeno",
+      "description": "Kit de sementes de **Alyssum Flor de Mel** nas cores **amarelo e violeta**, ideal para jardins e vasos. Flores delicadas, perfumadas e atraentes para abelhas e borboletas.",
+      "image": "/products/kit_sementes_de_alyssum_flor_de_mel_amarelo_e_violeta_isla_17677_1_d29d66329105bd3fa3cc06882cfb1bc6.png",
+      "images": [
+        "/products/kit_sementes_de_alyssum_flor_de_mel_amarelo_e_violeta_isla_17677_1_d29d66329105bd3fa3cc06882cfb1bc6.png"
+      ]
+    },
+    {
+      "id": "f6f9",
+      "productName": "Rabo de Galo – Celósia (Celosia argentea)",
+      "productId": "11",
+      "category": "flores-comestiveis",
+      "price": "12.00",
+      "quantity": "20",
+      "size": "pequeno",
+      "description": "Herbácea anual, ereta, de 30-60 cm de altura, de caule suculento. As folhas, às vezes, são levemente avermelhadas. Inflorescências plumosas, alongadas, eretas vermelhas, amarelas ou branco-creme, com flores bem pequenas. Deve ser cultivada a pleno sol, principalmente em canteiros no meio de gramados, em solo rico em matéria orgânica, de boa drenagem e irrigados frequentemente. Não tolera temperaturas baixas de inverno. É considerada uma Planta Alimentícia não Convencional (PANC) devido suas folhas e flores jovens e sementes.",
+      "image": "/products/CELOSIA-CORTECORTE.png",
+      "images": [
+        "/products/CELOSIA-CORTECORTE.png"
+      ]
+    },
+    {
+      "id": "4529",
+      "productName": "Arranjo de Flores Lily Bloom",
+      "productId": "12",
+      "category": "flores",
+      "price": "168.00",
+      "quantity": "20",
+      "size": "pequeno",
+      "description": "Arranjo vibrante com flores amarelas, roxas e brancas em vaso bege, perfeito para alegrar ambientes e transmitir boas energias.",
+      "image": "/products/230_31258.jpg",
+      "images": [
+        "/products/230_31258.jpg"
+      ]
     }
   ],
   "users": [
